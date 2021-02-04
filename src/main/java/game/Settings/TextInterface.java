@@ -1,4 +1,4 @@
-package com.Settings;
+package game.Settings;
 
 public class TextInterface implements Runnable{
 

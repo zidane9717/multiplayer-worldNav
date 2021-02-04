@@ -1,23 +1,27 @@
-package com.Entites;
+package game.Entites;
 
 
-import com.Items.Item;
-import com.Settings.Gold;
-import com.Settings.SingletonPlayer;
+import game.Items.Item;
+import game.Settings.Gold;
+import game.Settings.SingletonPlayer;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.HashMap;
+import java.util.List;
 
-public class Seller extends Entity {
+public class Seller implements Entity {
 
     private HashMap<String, Item> sellerItems; //Seller's items no one should get access to it.
 
-    Seller(String name, int available,EntityType entityType, HashMap items) {
-        setName(name);
-        setState(available);
-        setEntityType(entityType);
-        sellerItems = items;
+    Seller(List items) {
+        convertListToHashMap(items);
+    }
+
+    private void convertListToHashMap(List<Item> items) {
+        for(Item item : items){
+            sellerItems.put(item.getName(),item);
+        }
     }
 
     public String confirmPayment(String item) {
@@ -60,7 +64,7 @@ public class Seller extends Entity {
 
     @Override
     public String look() {
-        return "a strange man looks like a seller...he calls him self " + getName();
+        return "< Seller >";
     }
 }
 

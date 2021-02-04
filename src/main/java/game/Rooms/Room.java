@@ -1,6 +1,6 @@
-package com.Rooms;
+package game.Rooms;
 
-import com.Entites.Entity;
+import game.Entites.Entity;
 
 public class Room implements RoomPlan{
 

@@ -1,16 +1,15 @@
-package com.Items;
+package game.Items;
 
-import com.Settings.Gold;
+import game.Settings.Gold;
 
 public class FlashLight extends Item {
 
     private int state;
 
-    FlashLight(Gold price, String flashlight) {
-        setState(0);                //Default state is OFF
+    FlashLight(String flashlight,Gold price) {
+        setState(0);
         setName("flashlight");
         setPrice(price);
-        setItemType(flashlight);
     }
 
     public int getState() {

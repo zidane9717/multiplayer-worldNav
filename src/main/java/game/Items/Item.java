@@ -1,12 +1,11 @@
-package com.Items;
+package game.Items;
 
-import com.Settings.Gold;
+import game.Settings.Gold;
 
 public abstract class Item {
 
     private String name;
     private Gold price;
-    private String itemType;
 
     public String getName() {
         return name;
@@ -23,8 +22,6 @@ public abstract class Item {
     public void setPrice(Gold price) {
         this.price = price;
     }
-
-    public void setItemType(String type){this.itemType=type;}
 
     public abstract String use();
 

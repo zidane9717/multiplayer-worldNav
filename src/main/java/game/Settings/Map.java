@@ -1,13 +1,13 @@
-package com.Settings;
+package game.Settings;
 
-import com.Entites.Decor;
-import com.Entites.EntityFactory;
-import com.Items.Item;
-import com.Items.ItemFactory;
-import com.Items.Key;
-import com.Rooms.OldRoomBuilder;
-import com.Rooms.Room;
-import com.Rooms.RoomEngineer;
+import game.Entites.Decor;
+import game.Entites.EntityFactory;
+import game.Items.Item;
+import game.Items.ItemFactory;
+import game.Items.Key;
+import game.Rooms.OldRoomBuilder;
+import game.Rooms.Room;
+import game.Rooms.RoomEngineer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,31 +20,16 @@ public class Map {
 
     public Map() {
         initiateRooms();
-        createMap();
-    }
-
-    private void createMap() {
-
-        int counter = 0;
-
-        graph = new Room[3][3];
-        for (int i = 0; i < graph.length; i++) {
-            for (int j = 0; j < graph.length; j++) {
-                if ((i == 2 && j == 1) || (i == 1 && j == 2) || (i == 1 && j == 1) || (i == 1 && j == 0) || (i == 0 && j == 1)) {
-                    graph[i][j] = rooms.get(counter);
-                    counter++;
-                }
-            }
-        }
     }
 
     static Room roomAt(int y, int x) {
         if (x >= 3) {
-            Game.outcome(1);
+          //  Game.outcome(1);
         }
         return graph[y][x];
     }
 
+    /*
     private void initiateRooss() {
 
         RoomEngineer roomEngineer = new RoomEngineer(new OldRoomBuilder());
@@ -105,26 +90,43 @@ public class Map {
 
         rooms.add(roomEngineer.getRoom());
     }
+    */
 
     private void initiateRooms() {
-        RoomEngineer roomEngineer = new RoomEngineer(new OldRoomBuilder());
-        ItemFactory itemFactory = new ItemFactory();
+
+        RoomEngineer roomEngineer = new RoomEngineer();
 
         graph = new Room[6][9];
 
-        for (int i = 0; i < graph.length; i++) {
-            for (int j = 0; j < graph.length; j++) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 9; j++) {
 
-                if((i==0 && j==0) || (i==0 && j== 8) || (i== 5 && j==0) || (i== 5 && j==8)){
-                      continue;
+                if ((i == 0 && j == 0) || (i == 0 && j == 8) || (i == 5 && j == 0) || (i == 5 && j == 8)) {
+                    continue;
                 }
 
-               if(i==0 && j % 2==0){
-                   roomEngineer.makeLootRoom(1,itemFactory.makeItem());
-                   graph[i][j]=
-               }
+                if (i == 0 && j % 2 == 1) {
+                    roomEngineer.makeDecorRoom(1);
+                    graph[i][j] = roomEngineer.getRoom();
+                }
 
+                if (i == 0 && j % 2 == 0) {
+                    roomEngineer.makeDecorRoom(2);
+                    graph[i][j] = roomEngineer.getRoom();
+                }
 
+                if ((j == 0 && i % 2 == 1) || (j == 8 && i % 2 == 0)) {
+                    roomEngineer.makeDecorRoom(3);
+                    graph[i][j] = roomEngineer.getRoom();
+                }
+
+                if ((j == 0 && i % 2 == 0) || (j == 8 && i % 2 == 1)) {
+                    roomEngineer.makeDecorRoom(4);
+                    graph[i][j] = roomEngineer.getRoom();
+                }
+                System.out.println("=============");
+                System.out.println(i+" "+j);
+                System.out.println(graph[i][j].getRoomName());
             }
         }
     }

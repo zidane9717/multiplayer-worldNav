@@ -1,34 +1,35 @@
-package com.Entites;
+package game.Entites;
 
-import com.Items.Item;
-import com.Settings.Gold;
-import com.Settings.SingletonPlayer;
+import game.Items.Item;
+import game.Settings.Gold;
+import game.Settings.SingletonPlayer;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Chest extends Entity implements CheckableEntity {
+public class Chest implements Entity,CheckableEntity {
 
     private List items;
+    private String name;
+    private int state;
 
-    public Chest(String name, int state, EntityType entityType, List items) {
-        setName(name);
-        setState(state);
+    public Chest(String name, int state, List items) {
+        this.name=name;
+        this.state=state;
         this.items = items;
-        setEntityType(entityType);
     }
 
     @Override
     public String look() {
-        return "<the " + getName() + " chest>";
+        return "<the " + name + " chest>";
     }
 
     @Override
     public String check() {
-        if (getState() == 0) {
-            return "<Chest closed '" + getName() + "' key is needed to unlock>";
+        if (state == 0) {
+            return "<Chest closed '" + name + "' key is needed to unlock>";
         }
 
         if (items.isEmpty()) {
@@ -55,4 +56,18 @@ public class Chest extends Entity implements CheckableEntity {
         return "";
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int getState() {
+        return state;
+    }
+
+    @Override
+    public void setState(int state) {
+        this.state= state;
+    }
 }

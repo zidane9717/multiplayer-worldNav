@@ -1,12 +1,12 @@
-package com.Settings;
+package game.Settings;
 
-import com.Entites.CheckableEntity;
-import com.Entites.Door;
-import com.Entites.Entity;
-import com.Entites.Seller;
-import com.Items.FlashLight;
-import com.Items.Item;
-import com.Rooms.Room;
+import game.Entites.CheckableEntity;
+import game.Entites.Door;
+import game.Entites.Entity;
+import game.Entites.Seller;
+import game.Items.FlashLight;
+import game.Items.Item;
+import game.Rooms.Room;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -91,12 +91,14 @@ public enum SingletonPlayer {
 
         if (entity instanceof Door) { //Check if it is a door
 
+            Door door = (Door) entity;
+
             if (direction.equals("backward")) {
                 entity = currentRoom().wallAt(viceDirection());
                 wayToGo = viceDirection();
             }
 
-            if (entity.getState() == 1) { // Check if it is open
+            if (door.getState() == 1) { // Check if it is open
                 assert wayToGo != null;
                 doMove(wayToGo);
                 return "<Entered the " + currentRoom().getRoomName() + " room>";

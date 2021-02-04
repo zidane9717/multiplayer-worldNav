@@ -1,14 +1,10 @@
-package com.Entites;
+package game.Entites;
 
-import com.Items.Item;
+import game.Items.Item;
 
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * A door between 2 rooms must be the same the object.
- * That's why we have a Hashmap to store each door object with the key of it's name.
- */
 
 public class EntityFactory {
 
@@ -20,22 +16,22 @@ public class EntityFactory {
             return doors.get(name);
         }
 
-        Door door = new Door(name, state, Entity.EntityType.DOOR);
+        Door door = new Door(name, state);
         doors.put(name, door);
         return door;
 
     }
 
     public Entity makeEntity(String name, int state, List items) {
-        return new Chest(name, state, Entity.EntityType.CHEST, items);
+        return new Chest(name, state, items);
     }
 
-    public Entity makeEntity(Decor.DecorType name,Item item) {
+    public Entity makeEntity(Decor.DecorType name, Item item) {
         return new Decor(name,item);
     }
 
-    public Entity makeEntity(String name, int available, HashMap items) {
-        return new Seller(name, available, Entity.EntityType.SELLER, items);
+    public Entity makeEntity(List<Item> items) {
+        return new Seller(items);
     }
 
     public Entity makeEntity() {

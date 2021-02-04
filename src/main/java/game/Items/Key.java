@@ -1,9 +1,9 @@
-package com.Items;
+package game.Items;
 
-import com.Entites.CheckableEntity;
-import com.Entites.Entity;
-import com.Settings.Gold;
-import com.Settings.SingletonPlayer;
+import game.Entites.CheckableEntity;
+import game.Entites.Entity;
+import game.Settings.Gold;
+import game.Settings.SingletonPlayer;
 
 
 public class Key extends Item {
@@ -18,7 +18,6 @@ public class Key extends Item {
         keyType = type;
         setName(keyName);
         setPrice(price);
-        setItemType(key);
     }
 
     @Override
@@ -26,14 +25,14 @@ public class Key extends Item {
         SingletonPlayer player = SingletonPlayer.INSTANCE;
         Entity entity = player.currentRoom().wallAt(player.looking);
         if (entity instanceof CheckableEntity) {
-
-            if (entity.getName().equals(getName().toLowerCase())) { //if entity name = key name
-                if (entity.getState() == 1) {
-                    entity.setState(0);
-                    return entity.getName() + " " + keyType + " locked";
+             CheckableEntity entity1 = (CheckableEntity) entity;
+            if (entity1.getName().equals(getName().toLowerCase())) { //if entity name = key name
+                if (entity1.getState() == 1) {
+                    entity1.setState(0);
+                    return entity1.getName() + " " + keyType + " locked";
                 }
-                entity.setState(1);
-                return entity.getName() + " " + keyType + " unlocked";
+                entity1.setState(1);
+                return entity1.getName() + " " + keyType + " unlocked";
             }
         }
         return "i can only use keys for doors or chests..";
