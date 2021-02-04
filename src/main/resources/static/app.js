@@ -1,8 +1,7 @@
 var stompClient = null;
 
 function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#disconnect").prop("disabled", !connected);
+    $("#connect").prop("disabled", !connected);
     if (connected) {
         $("#conversation").show();
     }
@@ -18,12 +17,10 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings/'+$("#name").val(), function (greeting) {
-            showGreeting(JSON.parse(greeting.body).content);
-        });
         stompClient.subscribe('/topic/greetings', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
+
     });
 }
 

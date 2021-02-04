@@ -3,6 +3,8 @@ package game.Settings;
 
 
 
+import controller.GameController;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
@@ -19,7 +21,7 @@ public class Time implements Runnable {
     public void run() {
         try {
             while (time != 0) {
-                time();
+                GameController.sendToClients(time());
                 time = time - 60000;
                 Thread.sleep(60000);
             }

@@ -22,7 +22,7 @@ public class Key extends Item {
 
     @Override
     public String use() {
-        SingletonPlayer player = SingletonPlayer.INSTANCE;
+        SingletonPlayer player = SingletonPlayer.getInstance();
         Entity entity = player.currentRoom().wallAt(player.looking);
         if (entity instanceof CheckableEntity) {
              CheckableEntity entity1 = (CheckableEntity) entity;

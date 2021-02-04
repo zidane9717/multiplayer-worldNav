@@ -30,7 +30,7 @@ public class Decor implements Entity {
 
     public String check() {
         if (item !=null) {
-            SingletonPlayer player = SingletonPlayer.INSTANCE;
+            SingletonPlayer player = SingletonPlayer.getInstance();
             player.inventory.put(item.getName(), item);
             String print = "<The '" + item.getName() + "' was acquired>";
             item = null;

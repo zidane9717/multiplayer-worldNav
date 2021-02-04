@@ -12,14 +12,36 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public enum SingletonPlayer {
-    INSTANCE;
+public class SingletonPlayer {
 
+    static SingletonPlayer instance;
     public HashMap<String, Item> inventory = new HashMap<>();
     public BigDecimal gold = Gold.ZERO.getValue();
     public String looking = "east";
-    int y = 1;
-    int x = 0;
+    int y;
+    int x;
+
+    private SingletonPlayer(){}
+
+    public static SingletonPlayer getInstance(){
+        if(instance==null){
+            return instance = new SingletonPlayer();
+        }
+        return instance;
+    }
+
+    public void setCoordinates(int x , int y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX(){
+        return x;
+    }
+
+    public int getY(){
+        return y;
+    }
 
     public String look() { //Writing to interface Entity
         return currentRoom().wallAt(looking).look();
@@ -94,7 +116,6 @@ public enum SingletonPlayer {
             Door door = (Door) entity;
 
             if (direction.equals("backward")) {
-                entity = currentRoom().wallAt(viceDirection());
                 wayToGo = viceDirection();
             }
 
@@ -104,7 +125,7 @@ public enum SingletonPlayer {
                 return "<Entered the " + currentRoom().getRoomName() + " room>";
             }
         }
-        return "no place to move..i can only move through open doors";
+        return "no place to move.";
     }
 
     private void doMove(String direction) {
@@ -207,7 +228,7 @@ public enum SingletonPlayer {
     }
 
     boolean checkRoomLightning() {
-        SingletonPlayer player = SingletonPlayer.INSTANCE;
+        SingletonPlayer player = SingletonPlayer.getInstance();
 
         //if lights switch in the room are off or jammed -> check if flashlight is owned and on
         if (player.currentRoom().getIllumination() == 0 || player.currentRoom().getIllumination() == 3) {

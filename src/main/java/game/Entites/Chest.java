@@ -36,7 +36,7 @@ public class Chest implements Entity,CheckableEntity {
             return "<Chest is clear>";
         }
 
-        SingletonPlayer player = SingletonPlayer.INSTANCE;
+        SingletonPlayer player = SingletonPlayer.getInstance();
         System.out.print("<Items are looted: ");
         for (Object chestLoot : items) {
             if (chestLoot instanceof Gold) {

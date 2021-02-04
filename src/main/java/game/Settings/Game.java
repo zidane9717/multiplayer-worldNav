@@ -1,22 +1,20 @@
 package game.Settings;
 
 
-import java.util.Scanner;
 
 public class Game {
 
     Map map;
-    Time time;
+    static Time time;
     Thread timer;
-    SingletonPlayer player = SingletonPlayer.INSTANCE;
 
     public Game() {
         map = new Map();
-        //    time = new Time();
-        // timer = new Thread(time);
+        time = new Time();
+        timer = new Thread(time);
     }
 
-    private String processGame(String command) {
+    public static String processGame(SingletonPlayer player, String command) {
         System.out.print("=========================Game starts========================");
 
         String[] words = command.toLowerCase().split(" ");

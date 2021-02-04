@@ -26,7 +26,7 @@ public class Seller implements Entity {
 
     public String confirmPayment(String item) {
         Gold itemPrice = sellerItems.get(item).getPrice();
-        SingletonPlayer player = SingletonPlayer.INSTANCE;
+        SingletonPlayer player = SingletonPlayer.getInstance();
 
         player.inventory.put(item, sellerItems.get(item));
         player.gold = player.gold.subtract(itemPrice.getValue());
@@ -35,7 +35,7 @@ public class Seller implements Entity {
 
     public String sell(Item item) {
         BigDecimal itemPrice = item.getPrice().getValue();
-        SingletonPlayer player = SingletonPlayer.INSTANCE;
+        SingletonPlayer player = SingletonPlayer.getInstance();
 
         player.inventory.remove(item.getName());
         player.gold = player.gold.add(itemPrice, new MathContext(4));
@@ -56,7 +56,7 @@ public class Seller implements Entity {
     }
 
     public boolean enoughMoneyToTrade(String item) {
-        SingletonPlayer player = SingletonPlayer.INSTANCE;
+        SingletonPlayer player = SingletonPlayer.getInstance();
 
         Gold itemPrice = sellerItems.get(item).getPrice();
         return player.gold.intValue() >= itemPrice.getValue().intValue();
