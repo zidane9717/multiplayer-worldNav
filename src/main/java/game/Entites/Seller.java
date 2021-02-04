@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Seller implements Entity {
 
-    private HashMap<String, Item> sellerItems; //Seller's items no one should get access to it.
+    private final HashMap<String, Item> sellerItems = new HashMap<>(); //Seller's items no one should get access to it.
 
     Seller(List items) {
         convertListToHashMap(items);
