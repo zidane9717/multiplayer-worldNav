@@ -116,13 +116,13 @@ public enum SingletonPlayer {
         }
     }
 
-    public void playerStatus() {
-        String currentRoomName = currentRoom().getRoomName();
-        System.out.print("Looking : " + looking);
-        System.out.print("      Gold : " + gold);
-        System.out.println("      Current room : " + currentRoomName);
-        System.out.println("Keys & items: " + inventory.keySet().toString());
-        TextInterface.frameMessage();
+    public String playerStatus() {
+       String currentRoomName = currentRoom().getRoomName();
+       return "Looking : " + looking +"\n"+
+               "      Gold : " + gold +"\n"+
+               "      Current room : " + currentRoomName +"\n"+
+               "Keys & items: " + inventory.keySet().toString()+"\n"+
+               "===============";
     }
 
     public Room currentRoom() {
@@ -206,7 +206,7 @@ public enum SingletonPlayer {
         return "I'm not facing anyone that i can trade with..";
     }
 
-    boolean isIlluminated() {
+    boolean checkRoomLightning() {
         SingletonPlayer player = SingletonPlayer.INSTANCE;
 
         //if lights switch in the room are off or jammed -> check if flashlight is owned and on

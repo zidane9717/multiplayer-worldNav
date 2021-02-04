@@ -29,9 +29,8 @@ public class Time implements Runnable {
         }
     }
 
-    public void time() {
-        System.out.println();
-        System.out.println("================ Time remaining: " + time / 60 / 1000 + " minutes left================");
+    public String time() {
+        return "================ Time remaining: " + time / 60 / 1000 + " minutes left================";
     }
 
 }
