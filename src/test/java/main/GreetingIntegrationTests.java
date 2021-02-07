@@ -1,5 +1,3 @@
-package main;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.reflect.Type;
@@ -9,8 +7,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import model.Greeting;
-import model.HelloMessage;
+
+import messagingstompwebsocket.Greeting;
+import messagingstompwebsocket.HelloMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
