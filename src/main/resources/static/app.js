@@ -3,8 +3,14 @@ var stompClient = null;
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#name").prop("disabled", connected);
-    $("#send").prop("disabled", !connected);
-    $("#commandInput").prop("disabled", !connected);
+    $("#start").prop("disabled", !connected);
+
+}
+
+function startGame(){
+    $("#start").prop("disabled", true);
+    $("#send").prop("disabled", false);
+    $("#commandInput").prop("disabled", false);
     $("#conversation").show();
     $("#greetings").html("");
 }
@@ -49,6 +55,8 @@ $(function () {
     });
     $( "#connect" ).click(function() { checkName() });
     $( "#send" ).click(function() { sendCommand(); });
+    $( "#start" ).click(function() { startGame(); });
+
 });
 
 function checkName(){
