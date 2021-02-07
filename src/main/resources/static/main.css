@@ -77,3 +77,12 @@ padding: 12px;
     display: grid;
     top: 28px;
     }
+
+.bigContainer{
+    width: 996px;
+    text-align: center;
+    background: cadetblue;
+    border-radius: 29px;
+    margin: 21px auto 10px;
+}
+

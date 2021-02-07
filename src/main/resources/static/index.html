@@ -1,86 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <title>Hello WebSocket</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/main.css" rel="stylesheet">
+    <style>
+        button, input, optgroup, select, textarea {
+            margin: 0;
+            font: inherit;
+            color: inherit;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+        }
+        label {
+            display: inline-block;
+            max-width: 100%;
+            margin-bottom: 5px;
+            font-weight: 700;
+            font-family: cursive;
+            font-size: 20px;
+            text-align: center;
+            margin-top: 5px;
+            padding: 14px;
+        }
+    </style>
 </head>
 <body>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="firstDva">
-                    <label for="commandInput">Write your command here</label>
-                    <input style="padding: 24px;
-    margin: 0 auto 12px;
-    border-radius: 11px;"
-                           type="text"
-                           id="commandInput" class="form-control"
-                           disabled
-                           placeholder="Your command here...">
-                    <button class="submitBtn" id="send"
-                            class="btn btn-default"
-                            disabled
-                            onclick="myFunction()"
-                            type="submit">Send
-                    </button>
-                </div>
-                <div class="form-group" style="background: cadetblue;
-    border-radius: 14px;
-    padding: 26px;">
-                    <div class="firstDiva">
-                        <label for="name">Please Enter your name</label>
-                        <input style="margin-bottom: 10px;padding: 22px;border-radius: 11px;" autocomplete="off"
-                               required type="text"
-                               id="name" class="form-control" placeholder="Your name here...">
-                        <label for="connect">Join Game:</label>
-                        <button id="connect" class="joinBtn" type="submit">Join</button>
-                        <label for="start">Start game:</label>
-                        <button id="start" disabled class="joinBtn" type="button">Start</button>
-                    </div>
-                    <div><p id="boddd"
-                            style="
-                        text-align: center;
-    margin: 0 auto;
-    font-size: 16px;
-    font-family: cursive;
-    color: darkred;"></p></div>
-                </div>
-            </form>
-        </div>
+
+
+<div class="bigContainer">
+    <label>Welcome to WolrdNav the multiplayer game </label>
+
+    <div style="padding: 10px">
+        <form>
+            <label for="hostNumber">Write number for hosting</label>
+            <input type="number" id="hostNumber" autocomplete="off" required placeholder="Enter Host server number">
+            <button type="submit" id="hostBtn">Host</button>
+            <p id="validateAtIndex" style="font-size: 17px;color: red"></p>
+        </form>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>WorldNav Multiplayer Game</th>
-                </tr>
-                </thead>
-                <tbody id="greetings">
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="playerNames">
-        <div class="col-md-12">
-            <table id="playersNames" class="table table-striped">
-                <thead>
-                <tr>
-                    <label>Players:</label>
-                </tr>
-                </thead>
-                <tbody id="players">
-                </tbody>
-            </table>
-        </div>
+    <div style="padding: 10px">
+        <form>
+            <label for="joinNumber">Write host number to join</label>
+            <input type="number" id="joinNumber" autocomplete="off" required placeholder="Enter Join server number">
+            <button type="submit" id="joinBtn">Join</button>
+        </form>
     </div>
 </div>
-
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>

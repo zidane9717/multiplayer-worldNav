@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Hello WebSocket</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+</head>
+<body>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+    enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+<div id="main-content" class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="firstDva">
+                    <label for="commandInput">Write your command here</label>
+                    <input style="padding: 24px;
+    margin: 0 auto 12px;
+    border-radius: 11px;"
+                           type="text"
+                           id="commandInput" class="form-control"
+                           disabled
+                           placeholder="Your command here...">
+                    <button  id="send"
+                            class="btn btn-default"
+                            disabled
+                            onclick="myFunction()"
+                            type="submit">Send
+                    </button>
+                </div>
+                <div class="form-group" style="background: cadetblue;
+    border-radius: 14px;
+    padding: 26px;">
+                    <div class="firstDiva">
+                        <label for="name">Please Enter your name</label>
+                        <input style="margin-bottom: 10px;padding: 22px;border-radius: 11px;" autocomplete="off"
+                               required type="text"
+                               id="name" class="form-control" placeholder="Your name here...">
+                        <label for="connect">Join Game:</label>
+                        <button id="connect" class="joinBtn" type="submit">Join</button>
+                        <label for="start">Start game:</label>
+                        <button id="start" disabled class="joinBtn" type="button">Start</button>
+                    </div>
+                    <div><p id="boddd"
+                            style="
+                        text-align: center;
+    margin: 0 auto;
+    font-size: 16px;
+    font-family: cursive;
+    color: darkred;"></p></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table id="conversation" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>WorldNav Multiplayer Game</th>
+                </tr>
+                </thead>
+                <tbody id="greetings">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="playerNames">
+        <div class="col-md-12">
+            <table id="playersNames" class="table table-striped">
+                <thead>
+                <tr>
+                    <label>Players:</label>
+                </tr>
+                </thead>
+                <tbody id="players">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="/app.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+</body>
+</html>

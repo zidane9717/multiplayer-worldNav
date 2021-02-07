@@ -49,14 +49,16 @@ function showPlayer(message) {
     $("#players").append("<tr><td>" + message + "</td></tr>");
 }
 
+
 $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
+
+    $( "#hostBtn" ).click(function() { checkHostNumber(); });
     $( "#connect" ).click(function() { checkName() });
     $( "#send" ).click(function() { sendCommand(); });
     $( "#start" ).click(function() { startGame(); });
-
 });
 
 function checkName(){
@@ -75,6 +77,23 @@ function checkName(){
             }
         });
    }
+
+function checkHostNumber(){
+    $.ajax({
+        type: 'GET',
+        url: '/validate/hostNumber',
+        data: {
+            message: $("#hostNumber").val()
+        },
+        success: function(text) {
+            $( "#validateAtGamePlay" ).text(text);
+             window.location.href = 'gamePlay.html';
+        },
+        error: function (jqXHR) {
+            $( "#validateAtIndex" ).text("The number is already used..");
+        }
+    });
+}
 
 function myFunction(){
 window.scrollTo(0,document.body.scrollHeight);
