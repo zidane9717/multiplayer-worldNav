@@ -1,13 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Hello WebSocket</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/main.css" rel="stylesheet">
-    <script src="/webjars/jquery/jquery.min.js"></script>
-    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
-    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <script src="/app.js"></script>
 </head>
 <body>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
@@ -17,15 +13,12 @@
     <div class="row">
         <div class="col-md-6">
             <form class="form-inline">
-
                 <div style="    display: grid;
     position: fixed;
-    width: 17%;
     left: 11px;
-    background: cadetblue;
+    background: teal;
     border-radius: 22px;
     padding: 11px;">
-
                     <label for="commandInput">Write your command here</label>
                     <input style="padding: 24px;
     margin: 0 auto 12px;
@@ -34,12 +27,13 @@
                            id="commandInput" class="form-control"
                            disabled
                            placeholder="Your command here...">
-                    <button style="    background: mediumturquoise;
+                    <button style="background: mediumturquoise;
     width: 71%;
     padding: 12px;
     margin: 0 auto;" id="send"
                             class="btn btn-default"
                             disabled
+                            onclick="myFunction()"
                             type="submit">Send
                     </button>
                 </div>
@@ -53,9 +47,13 @@
                                id="name" class="form-control" placeholder="Your name here...">
                         <label for="connect">Join Game:</label>
                         <button id="connect" class="joinBtn" type="submit">Join</button>
-                        </button>
-
                     </div>
+                    <div><p id="boddd" style="
+                        text-align: center;
+    margin: 0 auto;
+    font-size: 16px;
+    font-family: cursive;
+    color: darkred;"></p></div>
                 </div>
             </form>
         </div>
@@ -74,5 +72,11 @@
         </div>
     </div>
 </div>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="/app.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 </body>
 </html>

@@ -18,11 +18,19 @@ function connect() {
         stompClient.subscribe('/topic/greetings', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
+        stompClient.subscribe('/topic/greetings/'+$("#name").val(), function (greeting) {
+            showGreeting(JSON.parse(greeting.body).content);
+        });
+            sendName();
     });
 }
 
-function sendCommand() {
+function sendName() {
     stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val(),'content': $("#commandInput").val()}));
+}
+
+function sendCommand() {
+    stompClient.send("/app/hello/"+$("#name").val(), {}, JSON.stringify({'name': $("#name").val(),'content': $("#commandInput").val()}));
 }
 
 function showGreeting(message) {
@@ -33,6 +41,27 @@ $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-    $( "#connect" ).click(function() { connect(); });
+    $( "#connect" ).click(function() { checkName() });
     $( "#send" ).click(function() { sendCommand(); });
 });
+
+function checkName(){
+      	$.ajax({
+            type: 'GET',
+            url: '/examples/echo-message',
+            data: {
+                message: $("#name").val()
+            },
+            success: function(text) {
+                $( "#boddd" ).text(text);
+                connect();
+            },
+            error: function (jqXHR) {
+                $( "#boddd" ).text("The name is already used..");
+            }
+        });
+   }
+
+function myFunction(){
+window.scrollTo(0,document.body.scrollHeight);
+}
