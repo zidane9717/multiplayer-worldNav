@@ -26,15 +26,21 @@ function connect() {
 }
 
 function sendName() {
+    showPlayer($("#name").val());
     stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val(),'content': $("#commandInput").val()}));
 }
 
 function sendCommand() {
+    showGreeting($("#name").val()+": "+$("#commandInput").val());
     stompClient.send("/app/hello/"+$("#name").val(), {}, JSON.stringify({'name': $("#name").val(),'content': $("#commandInput").val()}));
 }
 
 function showGreeting(message) {
     $("#greetings").append("<tr><td>" + message + "</td></tr>");
+}
+
+function showPlayer(message) {
+    $("#players").append("<tr><td>" + message + "</td></tr>");
 }
 
 $(function () {

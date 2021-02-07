@@ -39,6 +39,22 @@ body {
     display: grid;
 }
 
+.firstDva{
+display: grid;
+    position: fixed;
+    left: 11px;
+    background: teal;
+    border-radius: 22px;
+    padding: 11px;
+}
+
+.submitBtn{
+background: mediumturquoise;
+    width: 71%;
+    padding: 12px;
+    margin: 0 auto
+}
+
 label {
     display: inline-block;
     max-width: 100%;
@@ -48,3 +64,15 @@ label {
     font-size: 20px;
     text-align: center;
 }
+
+.playerNames{
+padding: 12px;
+    background: darkcyan;
+    border-radius: 12px;
+    width: 19%;
+    position: fixed;
+    right: 10px;
+    margin: 10px;
+    display: grid;
+    top: 28px;
+    }

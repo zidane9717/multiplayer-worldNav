@@ -21,15 +21,15 @@ public class GreetingController {
 	@MessageMapping("/hello/{username}")
 	@SendTo("/topic/greetings/{username}")
 	public Greeting greeting(HelloMessage message) throws Exception {
-		return new Greeting(message.getName()+" "+message.getContent());
+		Thread.sleep(500);
+		return new Greeting("Game: yes");
 	}
 
 	@MessageMapping("/hello")
 	@SendTo("/topic/greetings")
 	public Greeting greetingToAll(HelloMessage message) throws Exception {
-		Thread.sleep(500);
 
-		return new Greeting("ANNOUNCEMENT: "+message.getName()+": has joined the game.");
+		return new Greeting("ANNOUNCEMENT: '"+message.getName()+"' has joined the game.");
 	}
 
 	@RequestMapping(value = "/examples/echo-message", method = RequestMethod.GET)
