@@ -1,19 +1,5 @@
 var stompClient = null;
 
-function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#name").prop("disabled", connected);
-    $("#start").prop("disabled", !connected);
-}
-
-function startGame(){
-    $("#start").prop("disabled", true);
-    $("#send").prop("disabled", false);
-    $("#commandInput").prop("disabled", false);
-    $("#conversation").show();
-    $("#greetings").html("");
-}
-
 function connect() {
     var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
@@ -51,50 +37,39 @@ function showPlayer(message) {
 $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
+
     });
-    $( "#hostBtn" ).click(function() { checkHostNumber(); });
-    $( "#connect" ).click(function() { checkName() });
-    $( "#start" ).click(function() { startGame(); });
-    $( "#send" ).click(function() { sendCommand(); });
 });
 
-function checkName(){
-      	$.ajax({
-            type: 'GET',
-            url: '/validate/name',
-            data: {
-                message: $("#name").val()+" "+$("#hostNumber").val()
-            },
-            success: function(text) {
-                joinedGame(true);
-                connect();
-            },
-            error: function (jqXHR) {
-                $( "#boddd" ).text("The name is already used..");
-            }
-        });
-   }
+function buttonsDisable(){
 
-function joinedGame(create){
+    $("#name").prop("disabled", true);
+    $("#hostNumber").prop("disabled", true);
 
-    $("#name").prop("disabled", create);
-    $("#connect").prop("disabled", create);
+    $("#hostBtn").prop("disabled", true);
+    $("#joinBtn").prop("disabled", true);
 
-    $("#start").prop("disabled", !create);
+    $("#commandInput").prop("disabled", false);
+    $("#send").prop("disabled", false);
 
+    $("#conversation").show();
+    $("#greetings").html("");
 }
 
-function setHostCreated(create){
-
-    $("#hostNumber").prop("disabled", create);
-    $("#hostBtn").prop("disabled", create);
-
-    $("#joinNumber").prop("disabled", create);
-    $("#joinBtn").prop("disabled", create);
-
-    $("#name").prop("disabled", !create);
-    $("#connect").prop("disabled", !create);
-
+function checkName(){
+    $.ajax({
+        type: 'GET',
+        url: '/validate/name',
+        data: {
+            message: $("#name").val()+" "+$("#hostNumber").val()
+        },
+        success: function(text) {
+            buttonsDisable();
+        },
+        error: function (jqXHR) {
+            $( "#validateAtIndex" ).text("The name is already used..");
+        }
+    });
 }
 
 function checkHostNumber(){
@@ -105,8 +80,8 @@ function checkHostNumber(){
             message: $("#hostNumber").val()
         },
          success : function(text){
-          setHostCreated(true);
-          showGreeting(text);
+          checkName();
+          $("#start").prop("disabled", false);
          },
         error: function (jqXHR) {
             $( "#validateAtIndex" ).text("The number is already used..");

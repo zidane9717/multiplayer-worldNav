@@ -55,7 +55,7 @@ public class GreetingController {
             throw new InvalidName("Name is already used");
         }
         bookedNames.get(games.get(input[1])).add(input[0]);
-        return "Sucess";
+        return "Success";
     }
 
     public static void sendToClients(String message) {

@@ -26,19 +26,6 @@ body {
     width: 100%;
 }
 
-.joinBtn {
-
-    margin: 0 auto;
-    background: mediumturquoise;
-        padding: 10px;
-        width: 18%;
-}
-
-.firstDiva {
-    width: fit-content;
-    margin: 0 auto 41px;
-    display: grid;
-}
 
 .firstDva{
     padding: 12px;
@@ -52,12 +39,6 @@ body {
     top: 28px;;
 }
 
-.submitBtn{
-background: mediumturquoise;
-    width: 71%;
-    padding: 12px;
-    margin: 0 auto
-}
 
 label {
     display: inline-block;
@@ -83,14 +64,6 @@ padding: 12px;
     }
 
 
-.header{
-     width: 52%;
-    text-align: center;
-    background: cadetblue;
-    border-radius: 29px;
-    margin: 21px auto 10px;
-}
-
 button, input, select, textarea {
     font-family: inherit;
     font-size: inherit;
@@ -98,4 +71,12 @@ button, input, select, textarea {
     padding: 8px;
     border-radius: 11px;
     border: none;
+    width: fit-content;
+    margin: 0 auto;
+    padding-inline: 46px;
+}
+
+.btnHostJoin{
+    width: fit-content;
+    margin: 10px auto 0;
 }
