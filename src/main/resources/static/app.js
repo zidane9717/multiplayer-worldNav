@@ -4,7 +4,6 @@ function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#name").prop("disabled", connected);
     $("#start").prop("disabled", !connected);
-
 }
 
 function startGame(){
@@ -21,13 +20,13 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
+        stompClient.subscribe('/topic/greetings/'+$("#hostNumber").val()+"/"+$("#name").val(), function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
-        stompClient.subscribe('/topic/greetings/'+$("#name").val(), function (greeting) {
+        stompClient.subscribe('/topic/greetings/'+$("#hostNumber").val(), function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
-            sendName();
+          showGreeting("'"+$("#name").val()+"' joined the game.");
     });
 }
 
@@ -49,27 +48,25 @@ function showPlayer(message) {
     $("#players").append("<tr><td>" + message + "</td></tr>");
 }
 
-
 $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-
     $( "#hostBtn" ).click(function() { checkHostNumber(); });
     $( "#connect" ).click(function() { checkName() });
-    $( "#send" ).click(function() { sendCommand(); });
     $( "#start" ).click(function() { startGame(); });
+    $( "#send" ).click(function() { sendCommand(); });
 });
 
 function checkName(){
       	$.ajax({
             type: 'GET',
-            url: '/examples/echo-message',
+            url: '/validate/name',
             data: {
-                message: $("#name").val()
+                message: $("#name").val()+" "+$("#hostNumber").val()
             },
             success: function(text) {
-                $( "#boddd" ).text(text);
+                joinedGame(true);
                 connect();
             },
             error: function (jqXHR) {
@@ -78,6 +75,28 @@ function checkName(){
         });
    }
 
+function joinedGame(create){
+
+    $("#name").prop("disabled", create);
+    $("#connect").prop("disabled", create);
+
+    $("#start").prop("disabled", !create);
+
+}
+
+function setHostCreated(create){
+
+    $("#hostNumber").prop("disabled", create);
+    $("#hostBtn").prop("disabled", create);
+
+    $("#joinNumber").prop("disabled", create);
+    $("#joinBtn").prop("disabled", create);
+
+    $("#name").prop("disabled", !create);
+    $("#connect").prop("disabled", !create);
+
+}
+
 function checkHostNumber(){
     $.ajax({
         type: 'GET',
@@ -85,10 +104,10 @@ function checkHostNumber(){
         data: {
             message: $("#hostNumber").val()
         },
-        success: function(text) {
-            $( "#validateAtGamePlay" ).text(text);
-             window.location.href = 'gamePlay.html';
-        },
+         success : function(text){
+          setHostCreated(true);
+          showGreeting(text);
+         },
         error: function (jqXHR) {
             $( "#validateAtIndex" ).text("The number is already used..");
         }

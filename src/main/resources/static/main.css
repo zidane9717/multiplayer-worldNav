@@ -27,10 +27,11 @@ body {
 }
 
 .joinBtn {
-    width: 56%;
-    padding: 3%;
+
     margin: 0 auto;
     background: mediumturquoise;
+        padding: 10px;
+        width: 18%;
 }
 
 .firstDiva {
@@ -40,12 +41,15 @@ body {
 }
 
 .firstDva{
-display: grid;
+    padding: 12px;
+    background: darkcyan;
+    border-radius: 12px;
+    width: 17%;
     position: fixed;
-    left: 11px;
-    background: teal;
-    border-radius: 22px;
-    padding: 11px;
+    left: 10px;
+    margin: 0px;
+    display: grid;
+    top: 28px;;
 }
 
 .submitBtn{
@@ -78,11 +82,20 @@ padding: 12px;
     top: 28px;
     }
 
-.bigContainer{
-    width: 996px;
+
+.header{
+     width: 52%;
     text-align: center;
     background: cadetblue;
     border-radius: 29px;
     margin: 21px auto 10px;
 }
 
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    padding: 8px;
+    border-radius: 11px;
+    border: none;
+}

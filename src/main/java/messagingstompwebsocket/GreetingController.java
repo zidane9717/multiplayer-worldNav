@@ -14,47 +14,52 @@ import java.util.HashMap;
 @Controller
 public class GreetingController {
 
-	@Autowired
-	private static SimpMessagingTemplate simpMessagingTemplate;
-    private final ArrayList<String> bookedNames = new ArrayList<>();
-    private final HashMap<Integer, Game> games = new HashMap<Integer, Game>();
+    @Autowired
+    private static SimpMessagingTemplate simpMessagingTemplate;
 
-	@MessageMapping("/hello/{number}/{username}")
-	@SendTo("/topic/greetings/{number}/{username}")
-	public Greeting greeting(HelloMessage message) throws Exception {
-		Thread.sleep(500);
-		return new Greeting("Game: yes");
-	}
+    private final HashMap<Game, ArrayList<String>> bookedNames = new HashMap<>();
+    private final HashMap<String, Game> games = new HashMap<>();
 
-	@MessageMapping("/hello/{number}")
-	@SendTo("/topic/greetings")
-	public Greeting greetingToAll(HelloMessage message) throws Exception {
-		return new Greeting("ANNOUNCEMENT: Game created");
-	}
+    @MessageMapping("/hello/{number}/{username}")
+    @SendTo("/topic/greetings/{number}/{username}")
+    public Greeting greeting(HelloMessage message) throws Exception {
+        Thread.sleep(500);
+        return new Greeting("Game: yes");
+    }
 
-	@RequestMapping(value = "/examples/echo-message", method = RequestMethod.GET)
-	@ResponseBody
-	public String sendPostMessage(@RequestParam("message") String message){
-		System.out.println("aaaa");
+    @MessageMapping("/hello/{number}")
+    @SendTo("/topic/greetings/{number}")
+    public Greeting greetingToAll(HelloMessage message) throws Exception {
+        return new Greeting("ANNOUNCEMENT: Game created");
+    }
 
-		if(bookedNames.contains(message)){
-		throw new InvalidName("Invalid name");
-		}
-		bookedNames.add(message);
-		return "Success";
-	}
+    @RequestMapping(value = "/validate/hostNumber", method = RequestMethod.GET)
+    @ResponseBody
+    public String validateHostNumber(@RequestParam("message") String message) {
 
-	@RequestMapping(value = "/validate/hostNumber", method = RequestMethod.GET)
-	@ResponseBody
-	public String validateHostNumber(@RequestParam("message") String message){
-		if(games.containsKey(Integer.valueOf(message))){
-			throw new InvalidName("Host number already used");
-		}
-		games.put(Integer.valueOf(message),new Game());
-		return "Host created";
-	}
-	public static void sendToClients(String message){
-		simpMessagingTemplate.convertAndSend("/topic/greetings",message);
-	}
+        if (games.containsKey(message)) {
+            throw new InvalidName("Host number already used");
+        }
+        Game game = new Game();
+        games.put(message, game);
+        bookedNames.put(game,new ArrayList<>());
+        return "Host created. Use the host number to let other players join you";
+    }
+
+    @RequestMapping(value = "/validate/name", method = RequestMethod.GET)
+    @ResponseBody
+    public String validateName(@RequestParam("message") String message) {
+        String []input = message.split(" ");
+
+        if(bookedNames.get(games.get(input[1])).contains(input[0])){
+            throw new InvalidName("Name is already used");
+        }
+        bookedNames.get(games.get(input[1])).add(input[0]);
+        return "Sucess";
+    }
+
+    public static void sendToClients(String message) {
+        simpMessagingTemplate.convertAndSend("/topic/greetings", message);
+    }
 
 }
