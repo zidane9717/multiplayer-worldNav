@@ -37,7 +37,7 @@ function showPlayer(message) {
 $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
-
+          $("hostBtn").onclick = $(function () {checkHostNumber();})
     });
 });
 
