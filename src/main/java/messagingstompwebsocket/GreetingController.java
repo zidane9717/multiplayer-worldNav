@@ -25,9 +25,12 @@ public class GreetingController {
 
     @MessageMapping("/hello/{number}/{username}")
     @SendTo("/topic/greetings/{number}/{username}")
-    public Greeting greeting(@PathParam("number") String number, HelloMessage message) throws Exception {
-        System.out.println(number);
-        return new Greeting("Game: yes");
+    public Greeting greeting(HelloMessage message) throws Exception {
+        if(games.get(message.getNumber()).getGameStatus()){
+
+            return new Greeting("Game: on");
+        }
+        return new Greeting("Game: waiting for host to start the game..");
     }
 
     public static void sendToClients(String game,String message) {
@@ -38,10 +41,13 @@ public class GreetingController {
     @SendTo("/topic/greetings/{number}")
     public Greeting greetingToAll(HelloMessage message) throws Exception {
         if(message.getContent().equals("firstTime")){
+            games.get(message.getNumber()).getManager().addPlayer(message.getName());
+
             return new Greeting("ANNOUNCEMENT: "+message.getName()+" joined the game.");
         }
         else{
             games.get(message.getContent()).disableJoinable();
+            games.get(message.getContent()).setGameStatus();
             return new Greeting("ANNOUNCEMENT:Game started");
         }
     }
