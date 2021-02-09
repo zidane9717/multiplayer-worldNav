@@ -15,15 +15,15 @@ public class Door implements Entity,CheckableEntity {
 
     @Override
     public String look() {
-        return "<the " + name + " door>";
+        return "the " + name + " door";
     }
 
     @Override
     public String check(Player player) {
         if (state == 0) {
-            return "<Door is locked, " + name + " key is needed>";
+            return "Door is locked, " + name + " key is needed";
         }
-        return "<The " + name+ " door is open>";
+        return "The " + name+ " door is open";
     }
 
     @Override

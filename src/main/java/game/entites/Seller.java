@@ -29,7 +29,7 @@ public class Seller implements Entity {
 
         player.inventory.put(item, sellerItems.get(item));
         player.gold = player.gold.subtract(itemPrice.getValue());
-        return "<purchased " + item + ">";
+        return "purchased " + item;
     }
 
     public String sell(Item item,Player player) {
@@ -61,7 +61,7 @@ public class Seller implements Entity {
 
     @Override
     public String look() {
-        return "< Seller >";
+        return " Seller ";
     }
 }
 

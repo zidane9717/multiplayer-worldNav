@@ -24,21 +24,21 @@ public class Decor implements Entity,CheckableEntity {
     @Override
     public String look() {
         if (type == DecorType.PAINTING) {
-            return "<Painting>";
+            return "Painting";
         }
-        return "<You See a silhouette of you>";
+        return "You See a silhouette of you";
     }
 
     @Override
     public String check(Player player) {
         if (item !=null) {
             player.inventory.put(item.getName(), item);
-            String print = "<The '" + item.getName() + "' was acquired>";
+            String print = "The '" + item.getName() + "' was acquired";
             item = null;
             setState(0);
             return print;
         }
-        return "<nothing>";
+        return "nothing";
     }
 
     @Override

@@ -11,15 +11,12 @@ public class Game {
     Thread timer;
     private boolean joinable;
     private boolean gameStatus;
-    private final PlayersManagement manager;
+    private final PlayersManagement manager = new PlayersManagement();
 
     public Game(){
-
         gameStatus=false;
         joinable=true;
         map = new Map();
-        manager = new PlayersManagement();
-
     }
 
     public PlayersManagement getManager() {

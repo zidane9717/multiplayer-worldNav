@@ -4,7 +4,7 @@ package game.entites;
 
     @Override
     public String look() {
-        return "<empty wall>";
+        return "empty wall";
     }
 
 }

@@ -40,14 +40,6 @@ public class Player {
         this.y = y;
     }
 
-    public int getX(){
-        return x;
-    }
-
-    public int getY(){
-        return y;
-    }
-
     public String look() { //Writing to interface Entity
         return currentRoom().wallAt(looking).look();
     }
@@ -72,9 +64,9 @@ public class Player {
         if (currentRoom().wallAt(looking) instanceof Door) {
             Door door = (Door) currentRoom().wallAt(looking);
             if (door.getState() == 1) {
-                return "<door is open>";
+                return "door is open";
             } else {
-                return "<" + door.getName() + " key is needed>";
+                return door.getName() + " key is needed";
             }
         }
         return "it is not something i can open";
@@ -83,12 +75,12 @@ public class Player {
     public String switchLights() {
         if (currentRoom().getIllumination() == 1) {
             currentRoom().setIllumination(0);
-            return "<Lights off>";
+            return "Lights off";
         } else if (currentRoom().getIllumination() == 0) {
             currentRoom().setIllumination(1);
-            return "<Lights on>";
+            return "Lights on";
         } else {
-            return "<Switch lights are jammed..>";
+            return "Switch lights are jammed..";
         }
     }
 
@@ -109,7 +101,7 @@ public class Player {
             }
         }
 
-        return "<You are looking " + looking + " now>";
+        return "You are looking " + looking + " now";
     }
 
     public String move(String direction) {
@@ -127,7 +119,7 @@ public class Player {
             if (door.getState() == 1) { // Check if it is open
                 assert wayToGo != null;
                 doMove(wayToGo);
-                return "<Entered the " + currentRoom().getRoomName() + " room>";
+                return "Entered the " + currentRoom().getRoomName() + " room";
             }
         }
         return "no place to move.";
@@ -215,7 +207,7 @@ public class Player {
                     Seller seller = (Seller) currentRoom().wallAt(looking);
                     seller.list();
                 } else if (words[0].equals("finish")) {
-                    return "<trading finished>";
+                    return "trading finished";
                 } else if (words[0].equals("playerstatus")) {
                     playerStatus();
                 } else {

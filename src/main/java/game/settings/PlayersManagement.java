@@ -1,36 +1,34 @@
 package game.settings;
 
-import game.initiate.Game;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PlayersManagement {
 
-    HashMap<String,Player> players = new HashMap<>();
+    HashMap<String, Player> players = new HashMap<>();
     private final ArrayList<String> bookedRooms = new ArrayList();
 
-    public void addPlayer(String name){
+    public void addPlayer(String name) {
         Player player = new Player(name);
         generateCoordinates(player);
-        players.put(name,player);
+        players.put(name, player);
     }
 
     private void generateCoordinates(Player player) {
         while (true) {
-            int x = ThreadLocalRandom.current().nextInt(0, 5 + 1);
-            int y = ThreadLocalRandom.current().nextInt(0, 8 + 1);
-            if(!bookedRooms.contains(String.valueOf(y+x))){
-                player.setCoordinates(y,x);
-                bookedRooms.add(String.valueOf(y+x));
+            int x = ThreadLocalRandom.current().nextInt(0, 8 + 1);
+            int y = ThreadLocalRandom.current().nextInt(0, 5 + 1);
+            if (!bookedRooms.contains(String.valueOf(y + x))) {
+                player.setCoordinates(y, x);
+                bookedRooms.add(String.valueOf(y + x));
                 break;
             }
         }
     }
 
-    public static String processCommand(Player player, String command) {
-
+    public String processCommand(String name, String command) {
+        Player player = players.get(name);
         String[] words = command.toLowerCase().split(" ");
 
         // if command -> look, check, open, trade. while no lights by flashlight or room lights switch then print its dark.
@@ -61,9 +59,9 @@ public class PlayersManagement {
             case "backward" -> {
                 return player.move("backward");
             }
-            case "playerstatus" -> {
-                return time.time() + player.playerStatus();
-            }
+            // case "playerstatus" -> {
+            //   return time.time() + player.playerStatus();
+            //}
             case "left" -> {
                 return player.orientate("left");
             }
@@ -83,5 +81,4 @@ public class PlayersManagement {
             }
         }
     }
-
 }

@@ -24,20 +24,20 @@ public class Chest implements Entity,CheckableEntity {
 
     @Override
     public String look() {
-        return "<the " + name + " chest>";
+        return "the " + name + " chest";
     }
 
     @Override
     public String check(Player player) {
         if (state == 0) {
-            return "<Chest closed '" + name + "' key is needed to unlock>";
+            return "Chest closed '" + name + "' key is needed to unlock";
         }
 
         if (items.isEmpty()) {
-            return "<Chest is clear>";
+            return "Chest is clear";
         }
 
-        System.out.print("<Items are looted: ");
+        System.out.print("Items are looted: ");
         for (Object chestLoot : items) {
             if (chestLoot instanceof Gold) {
 

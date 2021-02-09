@@ -16,7 +16,7 @@ function connect() {
 }
 
 function sendName(text) {
-    stompClient.send("/app/hello/"+$("#number").val(), {}, JSON.stringify({'name': $("#name").val(),'content':text}));
+   stompClient.send("/app/hello/"+$("#number").val(), {}, JSON.stringify({'name': $("#name").val(),'number':$("#number").val(),'content':text}));
 }
 
 function sendCommand() {
