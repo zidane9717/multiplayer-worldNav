@@ -53,19 +53,21 @@
                     <label for="name">Write your nickname</label>
                     <input type="text" id="name" autocomplete="off" required placeholder="Enter your nickname">
 
-                    <label for="hostNumber">Write number to Host/Join</label>
-                    <input type="text" id="hostNumber" autocomplete="off" required placeholder="Enter number">
+                    <label for="number">Write number to Host/Join</label>
+                    <input type="number" id="number" autocomplete="off" required placeholder="Enter number">
                 </div>
                 <div class="btnHostJoin">
-                    <button style="margin-inline: 15px;" type="submit" id="hostBtn">Host</button>
-                    <button style="margin-inline: 15px;" type="submit" id="joinBtn">Join</button>
-                    <p id="validateAtIndex"
-                       style="    font-size: 17px;padding: 10px;color: red;text-align: center;"></p>
+                    <button style="margin-inline: 15px;" id="hostBtn" type="submit">Host</button>
+                    <button style="margin-inline: 15px;" id="joinBtn" type="submit">Join</button>
+                    <p style="    font-size: 17px;padding: 10px;color: red;text-align: center;"
+                       id="validateAtIndex"></p>
                 </div>
             </form>
-            <div style="text-align: center;padding: 11px;">
-                <button disabled style="margin-inline: 15px;" type="button" id="start">START</button>
-            </div>
+            <form>
+                <div style="text-align: center;padding: 11px;">
+                    <button disabled style="margin-inline: 15px;" type="submit" id="start">START</button>
+                </div>
+            </form>
         </div>
         <div class="row">
             <div class="col-md-12">

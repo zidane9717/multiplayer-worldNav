@@ -2,9 +2,11 @@ package messagingstompwebsocket;
 
 import game.initiate.Game;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,14 +25,37 @@ public class GreetingController {
     @MessageMapping("/hello/{number}/{username}")
     @SendTo("/topic/greetings/{number}/{username}")
     public Greeting greeting(HelloMessage message) throws Exception {
-        Thread.sleep(500);
+        System.out.println("hi");
         return new Greeting("Game: yes");
+    }
+
+    public static void sendToClients(String game,String message) {
+        simpMessagingTemplate.convertAndSend("/topic/greetings/"+game, message);
     }
 
     @MessageMapping("/hello/{number}")
     @SendTo("/topic/greetings/{number}")
     public Greeting greetingToAll(HelloMessage message) throws Exception {
-        return new Greeting("ANNOUNCEMENT: Game created");
+        if(message.getContent().equals("firstTime")){
+            return new Greeting("ANNOUNCEMENT: "+message.getName()+" joined the game.");
+        }
+        else{
+            games.get(message.getContent()).disableJoinable();
+            return new Greeting("ANNOUNCEMENT:Game started");
+        }
+    }
+
+    @RequestMapping(value = "/validate/joinNumber", method = RequestMethod.GET)
+    @ResponseBody
+    public String validateJoinNumber(@RequestParam("message") String message) {
+
+        if (games.containsKey(message)) {
+            if(games.get(message).getJoinable()){
+                return "joined";
+            }
+            throw new InvalidName("Game closed");
+        }
+        throw new InvalidName("Game does not exit");
     }
 
     @RequestMapping(value = "/validate/hostNumber", method = RequestMethod.GET)
@@ -58,8 +83,5 @@ public class GreetingController {
         return "Success";
     }
 
-    public static void sendToClients(String message) {
-        simpMessagingTemplate.convertAndSend("/topic/greetings", message);
-    }
 
 }

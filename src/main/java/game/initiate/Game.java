@@ -6,14 +6,24 @@ import game.settings.Time;
 
 public class Game {
 
+    private boolean joinable;
     Map map;
     static Time time;
     Thread timer;
 
     public Game() {
+        joinable=true;
         map = new Map();
         time = new Time();
         timer = new Thread(time);
+    }
+
+    public boolean getJoinable() {
+        return joinable;
+    }
+
+    public void disableJoinable() {
+        joinable = false;
     }
 
     public static String processCommand(Player player, String command) {
