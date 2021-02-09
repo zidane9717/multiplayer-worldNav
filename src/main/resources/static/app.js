@@ -20,8 +20,7 @@ function sendName(text) {
 }
 
 function sendCommand() {
-    showGreeting($("#name").val()+": "+$("#commandInput").val());
-    stompClient.send("/app/hello/"+$("#name").val(), {}, JSON.stringify({'name': $("#name").val(),'content': $("#commandInput").val()}));
+    stompClient.send("/app/hello/"+$("#number").val()+"/"+$("#name").val(), {}, JSON.stringify({'name': $("#name").val(),'number':$("#number").val(),'content':$("#commandInput").val()}));
 }
 
 function showGreeting(message) {
@@ -38,7 +37,10 @@ $(function () {
     });
     $( "#hostBtn" ).click(function() { checkNumber(0); });
     $( "#joinBtn" ).click(function() { checkNumber(1); });
-    $( "#start" ).click(function() { startGame(); });
+    $( "#start" ).click(function() {
+    startGame();
+     });
+    $( "#send" ).click(function() { sendCommand(); });
 
 });
 
