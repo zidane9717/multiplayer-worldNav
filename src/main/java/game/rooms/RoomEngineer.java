@@ -111,9 +111,9 @@ public class RoomEngineer {
         this.roomBuilder.buildName("lobby");
         this.roomBuilder.buildLights(1);
         this.roomBuilder.buildNorthWall(entityFactory.makeEntity("lobby",1));
-        this.roomBuilder.buildNorthWall(entityFactory.makeEntity("lobby",1));
-        this.roomBuilder.buildNorthWall(entityFactory.makeEntity("lobby",1));
-        this.roomBuilder.buildNorthWall(entityFactory.makeEntity("lobby",1));
+        this.roomBuilder.buildSouthWall(entityFactory.makeEntity("lobby",1));
+        this.roomBuilder.buildEastWall(entityFactory.makeEntity("lobby",1));
+        this.roomBuilder.buildWestWall(entityFactory.makeEntity("lobby",1));
     }
 
 }

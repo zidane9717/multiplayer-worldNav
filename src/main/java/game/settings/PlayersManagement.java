@@ -19,6 +19,12 @@ public class PlayersManagement {
         while (true) {
             int x = ThreadLocalRandom.current().nextInt(0, 8 + 1);
             int y = ThreadLocalRandom.current().nextInt(0, 5 + 1);
+
+            if((y == 0 && x == 0) || (y == 0 && x == 8) || (y == 5 && x == 0) || (y == 5 && x == 8)){
+                continue;
+            }
+
+            System.out.println(y+" "+x+ " awe");
             if (!bookedRooms.contains(String.valueOf(y + x))) {
                 player.setCoordinates(y, x);
                 bookedRooms.add(String.valueOf(y + x));
@@ -27,7 +33,7 @@ public class PlayersManagement {
         }
     }
 
-    public String processCommand(String name, String command) {
+    public  String processCommand(String name, String command) {
         Player player = players.get(name);
         String[] words = command.toLowerCase().split(" ");
 
@@ -36,7 +42,7 @@ public class PlayersManagement {
                 command.equals("open") || command.equals("trade") ||
                 (words.length > 1 && words[0].equals("use") && !words[1].equals("flashlight"))) {
             if (!player.checkRoomLightning()) {
-                return "<dark> use flashlight or switchlights on";
+                return "dark use flashlight or switchlights on";
             }
         }
 

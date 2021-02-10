@@ -16,6 +16,7 @@ import java.util.Scanner;
 
 public class Player {
 
+    private static Player instance;
     private String name;
     public HashMap<String, Item> inventory = new HashMap<>();
     public BigDecimal gold = Gold.TWENTY.getValue();
@@ -24,7 +25,12 @@ public class Player {
     private int x;
 
     public Player(String name){
+        instance=this;
         this.name=name;
+    }
+
+    public static Player getInstance() {
+        return instance;
     }
 
     public String getName() {

@@ -25,44 +25,49 @@ public class Map {
 
         graph = new Room[6][9];
 
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 9; j++) {
+        for (int y = 0; y < 6; y++) {
+            for (int x = 0; x < 9; x++) {
 
-                if ((i == 0 && j == 0) || (i == 0 && j == 8) || (i == 5 && j == 0) || (i == 5 && j == 8)) {
+                if ((y == 0 && x == 0) || (y == 0 && x == 8) || (y == 5 && x == 0) || (y == 5 && x == 8)) {
                     continue;
-                } else if (i == 0 && j % 2 == 1) {
+                } else if (y == 0 && x % 2 == 1) {
                     roomEngineer.makeDecorRoom(1);
-                    graph[i][j] = roomEngineer.getRoom();
-                } else if (i == 0 && j % 2 == 0) {
+                    graph[y][x] = roomEngineer.getRoom();
+                } else if (y == 0 && x % 2 == 0) {
                     roomEngineer.makeDecorRoom(2);
-                    graph[i][j] = roomEngineer.getRoom();
-                } else if ((j == 0 && i % 2 == 1) || (j == 8 && i % 2 == 0)) {
+                    graph[y][x] = roomEngineer.getRoom();
+                } else if ((x == 0 && y % 2 == 1) || (x == 8 && y % 2 == 0)) {
                     roomEngineer.makeDecorRoom(3);
-                    graph[i][j] = roomEngineer.getRoom();
-                } else if ((j == 0 && i % 2 == 0) || (j == 8 && i % 2 == 1)) {
+                    graph[y][x] = roomEngineer.getRoom();
+                } else if ((x == 0 && y % 2 == 0) || (x == 8 && y % 2 == 1)) {
                     roomEngineer.makeDecorRoom(4);
-                    graph[i][j] = roomEngineer.getRoom();
-                } else if ((i == 2 && j == 2) || (i == 2 && j == 6)) {
+                    graph[y][x] = roomEngineer.getRoom();
+                } else if ((y == 2 && x == 2) || (y == 2 && x == 6)) {
                     roomEngineer.makeChestRoom(1);
-                    graph[i][j] = roomEngineer.getRoom();
-                } else if (i == 3 && j == 4) {
+                    graph[y][x] = roomEngineer.getRoom();
+                } else if (y == 3 && x == 4) {
                     roomEngineer.makeChestRoom(2);
-                    graph[i][j] = roomEngineer.getRoom();
-                } else if ((i == 3 && j == 2) || (i == 3 && j == 6)) {
+                    graph[y][x] = roomEngineer.getRoom();
+                } else if ((y == 3 && x == 2) || (y == 3 && x == 6)) {
                     roomEngineer.makeSellerRoom(1);
-                    graph[i][j] = roomEngineer.getRoom();
-                } else if (i == 2 && j == 4) {
+                    graph[y][x] = roomEngineer.getRoom();
+                } else if (y == 2 && x == 4) {
                     roomEngineer.makeSellerRoom(2);
-                    graph[i][j] = roomEngineer.getRoom();
-                } else if (i == 5) {
+                    graph[y][x] = roomEngineer.getRoom();
+                }else if((y==5 && x==1) || (y==5 && x==7)){
+                    roomEngineer.makeDecorRoom(1);
+                    graph[y][x] = roomEngineer.getRoom();
+                } else if (y == 5) {
                     roomEngineer.makeWinnerRoom();
-                    graph[i][j] = roomEngineer.getRoom();
+                    graph[y][x] = roomEngineer.getRoom();
                 } else {
                     roomEngineer.makeLobbyRoom();
-                    graph[i][j] = roomEngineer.getRoom();
+                    graph[y][x] = roomEngineer.getRoom();
                 }
-
+               System.out.print(y+" "+x+" "+graph[y][x].getRoomName()+" ");
             }
+            System.out.println();
         }
+
     }
 }

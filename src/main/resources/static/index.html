@@ -15,6 +15,7 @@
 </noscript>
 
 <div class="firstDva">
+
     <label for="commandInput">Write your command here</label>
     <input style="padding: 24px;
     margin: 0 auto 12px;
@@ -23,12 +24,14 @@
            id="commandInput" class="form-control"
            disabled
            placeholder="Your command here...">
-    <button id="send"
-            class="btn btn-default"
-            disabled
-            onclick="myFunction()"
-            type="submit">Send
-    </button>
+    <form>
+        <button id="send"
+                class="btn btn-default"
+                disabled
+                onclick="myFunction();document.getElementById('commandInput').value = ''"
+                type="submit">Send
+        </button>
+    </form>
 </div>
 <div class="playerNames">
     <div class="col-md-12">
@@ -84,6 +87,15 @@
         </div>
     </div>
 </div>
+<script>
+    var input = document.getElementById("commandInput");
+    input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("send").click();
+        }
+    });
+</script>
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>

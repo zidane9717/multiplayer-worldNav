@@ -14,7 +14,6 @@ public class Chest implements Entity,CheckableEntity {
     private List items;
     private String name;
     private int state;
-    Player player;
 
     public Chest(String name, int state, List items) {
         this.name=name;
@@ -29,6 +28,7 @@ public class Chest implements Entity,CheckableEntity {
 
     @Override
     public String check(Player player) {
+
         if (state == 0) {
             return "Chest closed '" + name + "' key is needed to unlock";
         }
@@ -42,11 +42,10 @@ public class Chest implements Entity,CheckableEntity {
             if (chestLoot instanceof Gold) {
 
                 BigDecimal chestLootVal = ((Gold) chestLoot).getValue();
-
-                this.player.gold = this.player.gold.add(chestLootVal, new MathContext(4));
+                player.gold = player.gold.add(chestLootVal, new MathContext(4));
                 System.out.print("[" + ((Gold) chestLoot).getValue() + " gold] ");
             } else if (chestLoot instanceof Item) {
-                this.player.inventory.put(((Item) chestLoot).getName(), (Item) chestLoot);
+                player.inventory.put(((Item) chestLoot).getName(), (Item) chestLoot);
                 System.out.println("[The " + ((Item) chestLoot).getName() + "] ");
             }
         }

@@ -40,7 +40,9 @@ $(function () {
     $( "#start" ).click(function() {
     startGame();
      });
-    $( "#send" ).click(function() { sendCommand(); });
+    $( "#send" ).click(function() { sendCommand();
+    $("#send").reset;
+    });
 
 });
 
@@ -113,3 +115,4 @@ function checkNumber(type){
 function myFunction(){
 window.scrollTo(0,document.body.scrollHeight);
 }
+
