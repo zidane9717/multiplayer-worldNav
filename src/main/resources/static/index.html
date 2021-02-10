@@ -23,12 +23,14 @@
            type="text"
            id="commandInput" class="form-control"
            disabled
+           autocomplete="off"
            placeholder="Your command here...">
-    <form>
-        <button id="send"
+    <form style="width: fit-content; margin: 0 auto;">
+        <button
+                id="send"
                 class="btn btn-default"
                 disabled
-                onclick="myFunction();document.getElementById('commandInput').value = ''"
+                onclick="myFunction();"
                 type="submit">Send
         </button>
     </form>

@@ -15,6 +15,7 @@ public class RoomEngineer {
     private RoomBuilder roomBuilder;
     EntityFactory entityFactory = new EntityFactory();
     ItemFactory itemFactory = new ItemFactory();
+    int counter = 0;
 
     public Room getRoom() {
         return this.roomBuilder.getRoom();
@@ -34,10 +35,10 @@ public class RoomEngineer {
 
     public void makeDecorRoom(int type) {
 
+        counter++;
         roomBuilder = new OldRoomBuilder();
-
         this.roomBuilder.buildLights(1);
-        this.roomBuilder.buildName("Loot");
+        this.roomBuilder.buildName("Loot "+counter);
 
         if (type == 1) {
             this.roomBuilder.buildNorthWall(entityFactory.makeEntity(Decor.DecorType.PAINTING, itemFactory.makeItem("flashlight", Gold.TWO)));
@@ -64,7 +65,7 @@ public class RoomEngineer {
 
     public void makeChestRoom(int type) {
         roomBuilder = new OldRoomBuilder();
-        this.roomBuilder.buildName("chest");
+        this.roomBuilder.buildName("treasure");
         this.roomBuilder.buildLights(3);
         this.roomBuilder.buildEastWall(entityFactory.makeEntity("treasure", 1));
         this.roomBuilder.buildWestWall(entityFactory.makeEntity("treasure", 1));
