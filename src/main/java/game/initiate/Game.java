@@ -3,6 +3,7 @@ package game.initiate;
 
 import game.settings.PlayersManagement;
 import game.settings.Time;
+import messagingstompwebsocket.GreetingController;
 
 public class Game {
 
@@ -12,11 +13,18 @@ public class Game {
     private boolean joinable;
     private boolean gameStatus;
     private final PlayersManagement manager = new PlayersManagement();
+    static Game instance;
+
 
     public Game(){
+        instance=this;
         gameStatus=false;
         joinable=true;
         map = new Map();
+    }
+
+    public static Game getInstance(){
+        return instance;
     }
 
     public PlayersManagement getManager() {
@@ -39,4 +47,13 @@ public class Game {
         joinable = false;
     }
 
+    public void startTimer(String number) {
+        time = new Time(number);
+        timer = new Thread(time);
+        timer.start();
+    }
+
+    public String getTime() {
+       return time.time();
+    }
 }

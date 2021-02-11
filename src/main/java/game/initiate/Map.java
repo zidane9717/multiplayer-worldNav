@@ -36,11 +36,17 @@ public class Map {
                 } else if (y == 0 && x % 2 == 0) {
                     roomEngineer.makeDecorRoom(2);
                     graph[y][x] = roomEngineer.getRoom();
-                } else if ((x == 0 && y % 2 == 1) || (x == 8 && y % 2 == 0)) {
+                } else if ((x == 0 && y % 2 == 1)) {
                     roomEngineer.makeDecorRoom(3);
                     graph[y][x] = roomEngineer.getRoom();
-                } else if ((x == 0 && y % 2 == 0) || (x == 8 && y % 2 == 1)) {
+                } else if (x == 0 && y % 2 == 0) {
                     roomEngineer.makeDecorRoom(4);
+                    graph[y][x] = roomEngineer.getRoom();
+                } else if (x == 8 && y % 2 == 0) {
+                    roomEngineer.makeDecorRoom(5);
+                    graph[y][x] = roomEngineer.getRoom();
+                } else if (x == 8 && y % 2 == 1) {
+                    roomEngineer.makeDecorRoom(6);
                     graph[y][x] = roomEngineer.getRoom();
                 } else if ((y == 2 && x == 2) || (y == 2 && x == 6)) {
                     roomEngineer.makeChestRoom(1);
@@ -64,10 +70,7 @@ public class Map {
                     roomEngineer.makeLobbyRoom();
                     graph[y][x] = roomEngineer.getRoom();
                 }
-               System.out.print(y+" "+x+" "+graph[y][x].getRoomName()+" ");
             }
-            System.out.println();
         }
-
     }
 }

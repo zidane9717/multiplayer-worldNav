@@ -15,7 +15,17 @@ import java.util.HashMap;
 public class GreetingController {
 
     @Autowired
-    private static SimpMessagingTemplate simpMessagingTemplate;
+    private SimpMessagingTemplate webSocket;
+
+    static GreetingController instance;
+
+    GreetingController(){
+        instance=this;
+    }
+
+   public static GreetingController getInstance(){
+        return instance;
+    }
 
     private final HashMap<Game, ArrayList<String>> bookedNames = new HashMap<>();
     private final HashMap<String, Game> games = new HashMap<>();
@@ -46,6 +56,7 @@ public class GreetingController {
                 games.put(number, game);
                 bookedNames.put(game, new ArrayList<>());
                 bookedNames.get(game).add(name);
+                game.getManager().addPlayer(name);
                 return "Game created. Use the host number to let other players join you";
             }
             throw new InvalidName("Host number already used");
@@ -54,7 +65,8 @@ public class GreetingController {
         else if(state == 3){
             games.get(number).disableJoinable();
             games.get(number).setGameStatus();
-              return  "ANNOUNCEMENT: Game started ";
+            games.get(number).startTimer(number);
+            return  "ANNOUNCEMENT: Game started ";
         }
 
         //Join game
@@ -73,8 +85,7 @@ public class GreetingController {
         throw new InvalidName("Game does not exit");
     }
 
-    public static void sendToClients(String number, String message) {
-        simpMessagingTemplate.convertAndSend("/topic/greetings/" + number, message);
+    public void sendToClients(String number,String message) throws Exception {
+        webSocket.convertAndSend("/topic/greetings/"+number, "{\"content\":\""+message+"\"}");
     }
-
 }

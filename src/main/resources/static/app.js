@@ -66,6 +66,10 @@ function connect() {
             showGreeting(JSON.parse(greeting.body).content);
         });
 
+        stompClient.subscribe('/topic/greetings/' + $("#number").val(), function (greeting) {
+            showGreeting(JSON.parse(greeting.body).content);
+        });
+
     });
 }
 

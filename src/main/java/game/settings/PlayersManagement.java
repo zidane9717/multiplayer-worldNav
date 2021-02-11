@@ -1,5 +1,7 @@
 package game.settings;
 
+import game.initiate.Game;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
@@ -24,7 +26,6 @@ public class PlayersManagement {
                 continue;
             }
 
-            System.out.println(y+" "+x+ " awe");
             if (!bookedRooms.contains(String.valueOf(y + x))) {
                 player.setCoordinates(y, x);
                 bookedRooms.add(String.valueOf(y + x));
@@ -65,9 +66,9 @@ public class PlayersManagement {
             case "backward" -> {
                 return player.move("backward");
             }
-            // case "playerstatus" -> {
-            //   return time.time() + player.playerStatus();
-            //}
+            case "playerstatus" -> {
+               return player.playerStatus();
+            }
             case "left" -> {
                 return player.orientate("left");
             }

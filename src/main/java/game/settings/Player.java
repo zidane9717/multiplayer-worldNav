@@ -142,7 +142,7 @@ public class Player {
 
     public String playerStatus() {
        String currentRoomName = currentRoom().getRoomName();
-       return "Looking : " + looking +"\n"+
+       return " Looking : " + looking +"\n"+
                "      Gold : " + gold +"\n"+
                "      Current room : " + currentRoomName +"\n"+
                "Keys & items: " + inventory.keySet().toString()+"\n"+
