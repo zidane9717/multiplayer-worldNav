@@ -1,33 +1,25 @@
-package game.initiate;
+package game.settings;
 
 
-import game.settings.PlayersManagement;
-import game.settings.Time;
-import messagingstompwebsocket.GreetingController;
+import game.playerSystem.PlayersManager;
 
 public class Game {
 
-    final Map map;
+    Map map;
     static Time time;
     Thread timer;
     private boolean joinable;
     private boolean gameStatus;
-    private final PlayersManagement manager = new PlayersManagement();
-    static Game instance;
+    private PlayersManager manager;
 
-
-    public Game(){
-        instance=this;
+    public Game(String number){
         gameStatus=false;
         joinable=true;
-        map = new Map();
+        map = new Map(number);
+        manager = new PlayersManager(map,number);
     }
 
-    public static Game getInstance(){
-        return instance;
-    }
-
-    public PlayersManagement getManager() {
+    public PlayersManager getPlayersManager() {
         return manager;
     }
 
@@ -55,5 +47,9 @@ public class Game {
 
     public String getTime() {
        return time.time();
+    }
+
+    public Map getMap() {
+        return this.map;
     }
 }

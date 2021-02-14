@@ -1,11 +1,25 @@
 package game.rooms;
 
 import game.entites.Entity;
+import game.items.Item;
+import game.playerSystem.Player;
+
+import java.util.ArrayList;
 
 public class Room implements RoomPlan{
 
-    private int illumination;
+    public int getFightState() {
+        return fightState;
+    }
 
+    public void setFightState(int fightState) {
+        this.fightState = fightState;
+    }
+
+    private int fightState = 0;
+
+    public ArrayList<Item> lootOnFloor;
+    private int illumination;
     private String name;
     private Entity northWall;
     private Entity southWall;
@@ -89,4 +103,17 @@ public class Room implements RoomPlan{
         return null;
     }
 
+    public void setLootOnFloor(ArrayList<Item> values) {
+        lootOnFloor= values;
+    }
+
+    public String getLootOnFloor(Player player) {
+        String answer = " items looted from the floor : ";
+            for(Item item : lootOnFloor){
+                player.inventory.put(item.getName(),item);
+                answer=answer+" "+item.getName();
+            }
+            lootOnFloor=null;
+            return answer;
+    }
 }

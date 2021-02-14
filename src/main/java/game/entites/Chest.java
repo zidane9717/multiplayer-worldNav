@@ -1,8 +1,9 @@
 package game.entites;
 
 import game.items.Item;
+import game.items.Key;
 import game.settings.Gold;
-import game.settings.Player;
+import game.playerSystem.Player;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -37,22 +38,26 @@ public class Chest implements Entity,CheckableEntity {
             return "Chest is clear";
         }
 
-        System.out.print("Items are looted: ");
+       String answer="Items are looted: ";
         for (Object chestLoot : items) {
             if (chestLoot instanceof Gold) {
 
                 BigDecimal chestLootVal = ((Gold) chestLoot).getValue();
                 player.gold = player.gold.add(chestLootVal, new MathContext(4));
-                System.out.print("[" + ((Gold) chestLoot).getValue() + " gold] ");
+                answer=answer+" [" + ((Gold) chestLoot).getValue() + " gold] ";
             } else if (chestLoot instanceof Item) {
                 player.inventory.put(((Item) chestLoot).getName(), (Item) chestLoot);
-                System.out.println("[The " + ((Item) chestLoot).getName() + "] ");
+                if(chestLoot instanceof Key){
+                    answer=answer+" [The " + ((Item) chestLoot).getName() + " key] ";
+                }else{
+                    answer=answer+" [The " + ((Item) chestLoot).getName() + " ] ";
+                }
             }
         }
         List itemsEmpty = new ArrayList();
 
         items = itemsEmpty;
-        return "";
+        return answer;
     }
 
     @Override

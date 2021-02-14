@@ -46,12 +46,12 @@ public class RoomEngineer {
             this.roomBuilder.buildEastWall(entityFactory.makeEntity());
             this.roomBuilder.buildWestWall(entityFactory.makeEntity());
         } else if (type == 2) {
-            this.roomBuilder.buildNorthWall(entityFactory.makeEntity(Decor.DecorType.MIRROR, itemFactory.makeItem("chest", Key.KeyType.CHEST, Gold.TEN)));
+            this.roomBuilder.buildNorthWall(entityFactory.makeEntity(Decor.DecorType.MIRROR, itemFactory.makeItem("box", Key.KeyType.CHEST, Gold.TEN)));
             this.roomBuilder.buildSouthWall(entityFactory.makeEntity("loot", 1));
             this.roomBuilder.buildEastWall(entityFactory.makeEntity());
             this.roomBuilder.buildWestWall(entityFactory.makeEntity());
         } else if (type == 3) {
-            this.roomBuilder.buildNorthWall(entityFactory.makeEntity(Decor.DecorType.MIRROR, itemFactory.makeItem("chest", Key.KeyType.CHEST, Gold.TEN)));
+            this.roomBuilder.buildNorthWall(entityFactory.makeEntity(Decor.DecorType.MIRROR, itemFactory.makeItem("box", Key.KeyType.CHEST, Gold.TEN)));
             this.roomBuilder.buildSouthWall(entityFactory.makeEntity());
             this.roomBuilder.buildEastWall(entityFactory.makeEntity("loot", 1));
             this.roomBuilder.buildWestWall(entityFactory.makeEntity());
@@ -66,7 +66,7 @@ public class RoomEngineer {
             this.roomBuilder.buildEastWall(entityFactory.makeEntity());
             this.roomBuilder.buildWestWall(entityFactory.makeEntity("loot", 1));
         } else if (type == 6) {
-            this.roomBuilder.buildNorthWall(entityFactory.makeEntity(Decor.DecorType.MIRROR, itemFactory.makeItem("chest", Key.KeyType.CHEST, Gold.TEN)));
+            this.roomBuilder.buildNorthWall(entityFactory.makeEntity(Decor.DecorType.MIRROR, itemFactory.makeItem("box", Key.KeyType.CHEST, Gold.TEN)));
             this.roomBuilder.buildSouthWall(entityFactory.makeEntity());
             this.roomBuilder.buildEastWall(entityFactory.makeEntity());
             this.roomBuilder.buildWestWall(entityFactory.makeEntity("loot", 1));
@@ -82,9 +82,9 @@ public class RoomEngineer {
 
         if (type == 1) {
             this.roomBuilder.buildNorthWall(entityFactory.makeEntity("treasure", 1));
-            this.roomBuilder.buildSouthWall(entityFactory.makeEntity("chest", 0, Arrays.asList(Gold.TWENTY_FIVE, Gold.TWENTY_FIVE)));
+            this.roomBuilder.buildSouthWall(entityFactory.makeEntity("box", 0, Arrays.asList(Gold.FIFTY, Gold.FIFTY)));
         } else {
-            this.roomBuilder.buildNorthWall(entityFactory.makeEntity("chest", 0, Arrays.asList(Gold.TWENTY_FIVE, Gold.TWENTY_FIVE)));
+            this.roomBuilder.buildNorthWall(entityFactory.makeEntity("box", 0, Arrays.asList(Gold.FIFTY, Gold.FIFTY)));
             this.roomBuilder.buildSouthWall(entityFactory.makeEntity("treasure", 1));
         }
     }

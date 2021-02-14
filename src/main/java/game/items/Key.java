@@ -3,7 +3,7 @@ package game.items;
 import game.entites.CheckableEntity;
 import game.entites.Entity;
 import game.settings.Gold;
-import game.settings.Player;
+import game.playerSystem.Player;
 
 
 public class Key extends Item {
@@ -22,7 +22,7 @@ public class Key extends Item {
 
     @Override
     public String use(Player player) {
-        Entity entity = player.currentRoom().wallAt(player.looking);
+        Entity entity = player.currentRoom(player.nav.getY(),player.nav.getX()).wallAt(player.nav.getLooking());
         if (entity instanceof CheckableEntity) {
              CheckableEntity entity1 = (CheckableEntity) entity;
             if (entity1.getName().equals(getName().toLowerCase())) { //if entity name = key name

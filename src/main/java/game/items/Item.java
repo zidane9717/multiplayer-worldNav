@@ -1,7 +1,7 @@
 package game.items;
 
 import game.settings.Gold;
-import game.settings.Player;
+import game.playerSystem.Player;
 
 public abstract class Item {
 

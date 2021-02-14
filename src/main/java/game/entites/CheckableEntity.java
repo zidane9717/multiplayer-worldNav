@@ -1,6 +1,6 @@
 package game.entites;
 
-import game.settings.Player;
+import game.playerSystem.Player;
 
 public interface CheckableEntity{
 

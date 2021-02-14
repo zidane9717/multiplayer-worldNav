@@ -35,6 +35,33 @@
         </button>
     </form>
 </div>
+<div class="secondDva">
+    <label for="fight" style="padding-bottom: 18px;">FIGHT MODE:</label>
+    <input disabled id="fight" style="padding-bottom: 8px;
+    margin-bottom: 17px;">
+    <form style="text-align: center;">
+        <button
+
+                id="rock"
+                class="btn btn-default"
+                disabled
+                type="submit">ROCK
+        </button>
+        <button
+                id="paper"
+                class="btn btn-default"
+                disabled
+                type="submit">PAPER
+        </button>
+        <button
+                id="scissors"
+                class="btn btn-default"
+                disabled
+                type="submit">SCISSORS
+        </button>
+    </form>
+</div>
+
 <div class="playerNames">
     <div class="col-md-12">
         <table id="playersNames" class="table table-striped">
@@ -48,6 +75,7 @@
         </table>
     </div>
 </div>
+
 <div id="main-content" class="container">
     <div class="row">
         <div style="    padding: 10px;
@@ -55,6 +83,10 @@
     border-radius: 15px;">
             <form>
                 <div style="text-align: center;display: grid;">
+                    <div style=" text-align: left;
+    width: fit-content;">
+                        <button disabled id="disconnect">Disconnect</button>
+                    </div>
                     <label for="name">Write your nickname</label>
                     <input type="text" id="name" autocomplete="off" required placeholder="Enter your nickname">
 
@@ -91,7 +123,7 @@
 </div>
 <script>
     var input = document.getElementById("commandInput");
-    input.addEventListener("keyup", function(event) {
+    input.addEventListener("keyup", function (event) {
         if (event.keyCode === 13) {
             event.preventDefault();
             document.getElementById("send").click();

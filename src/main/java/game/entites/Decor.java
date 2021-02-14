@@ -1,9 +1,10 @@
 package game.entites;
 
 import game.items.Item;
-import game.settings.Player;
+import game.items.Key;
+import game.playerSystem.Player;
 
-public class Decor implements Entity,CheckableEntity {
+public class Decor implements Entity, CheckableEntity {
 
     public enum DecorType {
         PAINTING, MIRROR;
@@ -11,7 +12,8 @@ public class Decor implements Entity,CheckableEntity {
 
     private Item item;
     private DecorType type;
-    private  int state;
+    private int state;
+
     private Decor() {
     }
 
@@ -31,9 +33,14 @@ public class Decor implements Entity,CheckableEntity {
 
     @Override
     public String check(Player player) {
-        if (item !=null) {
+        if (item != null) {
             player.inventory.put(item.getName(), item);
-            String print = "The '" + item.getName() + "' was acquired";
+            String print="";
+            if (item instanceof Key) {
+                 print = "The '" + item.getName() + "' key was acquired";
+            } else {
+                 print = "The '" + item.getName() + "' was acquired";
+            }
             item = null;
             setState(0);
             return print;
@@ -49,12 +56,12 @@ public class Decor implements Entity,CheckableEntity {
     @Override
     public int getState() {
 
-       return state;
+        return state;
     }
 
     @Override
     public void setState(int state) {
-         this.state=state;
+        this.state = state;
     }
 
 }

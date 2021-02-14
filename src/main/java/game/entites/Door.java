@@ -1,7 +1,7 @@
 package game.entites;
 
 
-import game.settings.Player;
+import game.playerSystem.Player;
 
 public class Door implements Entity,CheckableEntity {
 
@@ -23,7 +23,7 @@ public class Door implements Entity,CheckableEntity {
         if (state == 0) {
             return "Door is locked, " + name + " key is needed";
         }
-        return "The " + name+ " door is open";
+        return "The " + name+ " door is open. if you can't move through it , there is a fight inside the room, try again later.";
     }
 
     @Override

@@ -3,7 +3,7 @@ package game.entites;
 
 import game.items.Item;
 import game.settings.Gold;
-import game.settings.Player;
+import game.playerSystem.Player;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -40,13 +40,12 @@ public class Seller implements Entity {
         return "<" + item.getName() + " sold>";
     }
 
-    public void list() {
-        System.out.println("=====Seller's store======");
-        System.out.println("Item:             Price:");
+    public String list() {
+        String answer = "";
         for (String item : sellerItems.keySet()) {
-            System.out.println(item + "         " + sellerItems.get(item).getPrice().getValue().intValue());
+            answer= answer + item + " key, price: " + sellerItems.get(item).getPrice().getValue().intValue()+" ";
         }
-        System.out.println("========================");
+        return answer;
     }
 
     public boolean haveThisItem(String item) {

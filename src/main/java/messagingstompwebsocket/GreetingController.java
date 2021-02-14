@@ -1,6 +1,10 @@
 package messagingstompwebsocket;
 
-import game.initiate.Game;
+import game.playerSystem.PlayersManager;
+import game.settings.Game;
+import game.playerSystem.Player;
+import game.settings.GameManager;
+import game.settings.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -19,16 +23,13 @@ public class GreetingController {
 
     static GreetingController instance;
 
-    GreetingController(){
-        instance=this;
+    GreetingController() {
+        instance = this;
     }
 
-   public static GreetingController getInstance(){
+    public static GreetingController getInstance() {
         return instance;
     }
-
-    private final HashMap<Game, ArrayList<String>> bookedNames = new HashMap<>();
-    private final HashMap<String, Game> games = new HashMap<>();
 
     @MessageMapping("/hello/{number}/{username}")
     @SendTo("/topic/greetings/{number}/{username}")
@@ -38,54 +39,88 @@ public class GreetingController {
         String name = message.getName();
         String command = message.getContent();
 
-        if (games.get(number).getGameStatus()) {
-            String answer = games.get(number).getManager().processCommand(name, command);
-            return new Greeting("Game: " + answer);
+        GameManager managerGames = GameManager.getInstance();
+        if (managerGames.checkGame(number)) {
+            if (managerGames.getGame(number).getGameStatus()) {
+                String answer = managerGames.getGame(number).getPlayersManager().processCommand(name, command);
+                return new Greeting("Game: " + answer);
+            }
+            return new Greeting("Game: waiting for host to start the game..");
         }
-        return new Greeting("Game: waiting for host to start the game..");
+        return new Greeting("Game has finished");
     }
 
     @RequestMapping(value = "/validate", method = RequestMethod.GET)
     @ResponseBody
-    public String validate(@RequestParam("number") String number, @RequestParam("name") String name, @RequestParam("state") int state) {
+    public String validate(@RequestParam("number") String number, @RequestParam("name") String name, @RequestParam("state") int state) throws Exception {
+
+        GameManager manager = GameManager.getInstance();
 
         //Host game
         if (state == 1) {
-            if (!games.containsKey(number)) {
-                Game game = new Game();
-                games.put(number, game);
-                bookedNames.put(game, new ArrayList<>());
-                bookedNames.get(game).add(name);
-                game.getManager().addPlayer(name);
-                return "Game created. Use the host number to let other players join you";
+            if (!manager.checkGame(number)) {
+                manager.createGame(number);
+                manager.getGame(number).getPlayersManager().addPlayer(name, manager.getGame(number).getMap());
+                return "ANNOUNCEMENT: GAME CREATED";
             }
             throw new InvalidName("Host number already used");
         }
         //Start game by Host
-        else if(state == 3){
-            games.get(number).disableJoinable();
-            games.get(number).setGameStatus();
-            games.get(number).startTimer(number);
-            return  "ANNOUNCEMENT: Game started ";
+        else if (state == 3) {
+            manager.getGame(number).disableJoinable();
+            manager.getGame(number).setGameStatus();
+            manager.getGame(number).startTimer(number);
+            broadcastPlayersList(number);
+            sendToClients(number, "ANNOUNCEMENT: GAME STARTED");
+            return "";
         }
 
         //Join game
-        Game game = games.get(number);
-        if (games.containsValue(game)) {
-            if (!bookedNames.get(game).contains(name)) {
-                if (game.getJoinable()) {
-                    bookedNames.get(game).add(name);
-                    game.getManager().addPlayer(name);
-                    return "ANNOUNCEMENT: "+name+" joined the game.";
+        if (manager.checkGame(number)) { //Check game exist
+            if (manager.getGame(number).getJoinable()) {  //Check game joinable
+                if (!manager.getGame(number).getPlayersManager().checkPlayerName(name)) { //Check name not exist
+                    manager.getGame(number).getPlayersManager().addPlayer(name, manager.getGame(number).getMap());
+                    sendToClients(number, "ANNOUNCEMENT: " + name + " joined the game.");
+                    return "ANNOUNCEMENT: " + name + " joined the game.";
                 }
-                throw new InvalidName("Game closed");
+                throw new InvalidName("Name used");
             }
-            throw new InvalidName("Name is already used");
+            throw new InvalidName("Game closed");
         }
-        throw new InvalidName("Game does not exit");
+        throw new InvalidName("Game does not exist");
     }
 
-    public void sendToClients(String number,String message) throws Exception {
-        webSocket.convertAndSend("/topic/greetings/"+number, "{\"content\":\""+message+"\"}");
+    public void sendToClients(String number, String message) throws Exception {
+        webSocket.convertAndSend("/topic/greetings/" + number, "{\"content\":\"" + message + "\"}");
+    }
+
+    @RequestMapping(value = "/fight", method = RequestMethod.GET)
+    @ResponseBody
+    public void fight(@RequestParam("number") String number, @RequestParam("name") String
+            name, @RequestParam("id") String id, @RequestParam("content") String attackMove) throws InterruptedException {
+        GameManager.getInstance().getGame(number).getPlayersManager().processFight(Integer.parseInt(id), name, attackMove);
+    }
+
+    @RequestMapping(value = "/disconnect", method = RequestMethod.GET)
+    @ResponseBody
+    public void disconnect(@RequestParam("number") String number, @RequestParam("name") String name) throws InterruptedException {
+       GameManager manger = GameManager.getInstance();
+       PlayersManager playerManger = manger.getGame(number).getPlayersManager();
+       playerManger.disconnect(name);
+       broadcastPlayersList(number);
+    }
+
+    public void fightModeBroadCast(String number, Player playerOne, Player playerTwo, String message) {
+        webSocket.convertAndSend("/topic/greetings/" + number + "/" + playerOne.getName(), "{\"content\":\"" + message + "\"}");
+        webSocket.convertAndSend("/topic/greetings/" + number + "/" + playerTwo.getName(), "{\"content\":\"" + message + "\"}");
+    }
+
+    public void broadcastPlayersList(String number){
+        GameManager manager = GameManager.getInstance();
+        webSocket.convertAndSend("/topic/greetings/" + number, "{\"content\":\"" + "" + "!!! ==Updated list== !!!" + "\"}");
+        for(String name : manager.getGame(number).getPlayersManager().players.keySet()){
+            String message = "player : "+name;
+            webSocket.convertAndSend("/topic/greetings/" + number, "{\"content\":\"" + message + "\"}");
+        }
     }
 }

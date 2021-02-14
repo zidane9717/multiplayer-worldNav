@@ -1,21 +1,25 @@
-package game.initiate;
+package game.settings;
 
 import game.rooms.Room;
 import game.rooms.RoomEngineer;
+import game.playerSystem.Player;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Map {
 
-    private static Room[][] graph;
+    private Room[][] graph;
+    public HashMap<String, ArrayList<Player>> playersLocations;
+    private String number;
 
-    public Map() {
+    public Map(String number) {
+        this.number = number;
+        playersLocations = new HashMap<>();
         initiateRoomsAndMap();
     }
 
-    public static Room roomAt(int y, int x) {
-        if (x >= 3) {
-            //  Game.outcome(1);
-        }
+    public Room roomAt(int y, int x) {
         return graph[y][x];
     }
 
@@ -60,7 +64,7 @@ public class Map {
                 } else if (y == 2 && x == 4) {
                     roomEngineer.makeSellerRoom(2);
                     graph[y][x] = roomEngineer.getRoom();
-                }else if((y==5 && x==1) || (y==5 && x==7)){
+                } else if ((y == 5 && x == 1) || (y == 5 && x == 7)) {
                     roomEngineer.makeDecorRoom(1);
                     graph[y][x] = roomEngineer.getRoom();
                 } else if (y == 5) {
@@ -70,7 +74,16 @@ public class Map {
                     roomEngineer.makeLobbyRoom();
                     graph[y][x] = roomEngineer.getRoom();
                 }
+                playersLocations.put(String.valueOf(y) + String.valueOf(x), new ArrayList<Player>());
             }
         }
     }
+
+    public void roomAvailability(String yx, int state) {
+        int x = Integer.parseInt(String.valueOf(yx.charAt(1)));
+        int y = Integer.parseInt(String.valueOf(yx.charAt(0)));
+        Room room = graph[y][x];
+        room.setFightState(state);
+    }
+
 }

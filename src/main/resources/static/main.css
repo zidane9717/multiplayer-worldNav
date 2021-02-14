@@ -74,9 +74,21 @@ button, input, select, textarea {
     width: fit-content;
     margin: 0 auto;
     padding-inline: 46px;
+
 }
 
 .btnHostJoin{
     width: fit-content;
     margin: 10px auto 0;
+}
+
+.secondDva{
+    width: fit-content;
+    position: fixed;
+    background: cadetblue;
+    bottom: 251px;
+    display: grid;
+    padding: 10px;
+    border-radius: 19px;
+    margin: 8px;
 }

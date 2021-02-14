@@ -1,4 +1,4 @@
-package game.initiate;
+package game.settings;
 
 public class TextInterface{
 
