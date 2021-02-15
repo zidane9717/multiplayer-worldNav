@@ -1,10 +1,8 @@
 package game.playerSystem;
 
 import game.items.Item;
-import game.settings.GameManager;
-import messagingstompwebsocket.GreetingController;
-
-import java.math.BigDecimal;
+import mvc.controller.GameManager;
+import mvc.controller.GameController;
 
 public class FightMode {
 
@@ -27,7 +25,7 @@ public class FightMode {
 
     void startFight() {
 
-        GreetingController controller = GreetingController.getInstance();
+        GameController controller = GameController.getInstance();
         GameManager manager = GameManager.getInstance();
         PlayersManager managerPlayers = manager.getGame(number).getPlayersManager();
 
@@ -56,14 +54,12 @@ public class FightMode {
         }
     }
 
-
     public void proceed(String name, String attackMove) {
         if (name.equals(player1.getName())) {
             this.attackMove1 = attackMove;
         } else {
             this.attackMove2 = attackMove;
         }
-
         if (attackMove1 != null && attackMove2 != null) {
             rps(attackMove1, attackMove2);
             attackMove1 = null;
@@ -72,7 +68,7 @@ public class FightMode {
     }
 
     private void rps(String attackMove1, String attackMove2) {
-        GreetingController controller = GreetingController.getInstance();
+        GameController controller = GameController.getInstance();
         GameManager manager = GameManager.getInstance();
         PlayersManager managerPlayers = manager.getGame(number).getPlayersManager();
 

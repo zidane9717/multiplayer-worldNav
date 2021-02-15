@@ -8,8 +8,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 
-import messagingstompwebsocket.Greeting;
-import messagingstompwebsocket.HelloMessage;
+import mvc.SendMessage;
+import mvc.ReceivedMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -64,14 +64,14 @@ public class GreetingIntegrationTests {
 				session.subscribe("/topic/greetings", new StompFrameHandler() {
 					@Override
 					public Type getPayloadType(StompHeaders headers) {
-						return Greeting.class;
+						return SendMessage.class;
 					}
 
 					@Override
 					public void handleFrame(StompHeaders headers, Object payload) {
-						Greeting greeting = (Greeting) payload;
+						SendMessage sendMessage = (SendMessage) payload;
 						try {
-							assertEquals("Hello, Spring!", greeting.getContent());
+							assertEquals("Hello, Spring!", sendMessage.getContent());
 						} catch (Throwable t) {
 							failure.set(t);
 						} finally {
@@ -81,7 +81,7 @@ public class GreetingIntegrationTests {
 					}
 				});
 				try {
-					session.send("/app/hello", new HelloMessage("Spring","hi","hey"));
+					session.send("/app/hello", new ReceivedMessage("Spring","hi","hey"));
 				} catch (Throwable t) {
 					failure.set(t);
 					latch.countDown();
@@ -97,7 +97,7 @@ public class GreetingIntegrationTests {
 			}
 		}
 		else {
-			fail("Greeting not received");
+			fail("SendMessage not received");
 		}
 
 	}

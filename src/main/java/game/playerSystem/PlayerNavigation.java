@@ -3,7 +3,7 @@ package game.playerSystem;
 import game.entites.Door;
 import game.entites.Entity;
 import game.rooms.Room;
-import game.settings.GameManager;
+import mvc.controller.GameManager;
 import game.settings.Map;
 
 public class PlayerNavigation {

@@ -1,4 +1,4 @@
-package messagingstompwebsocket;
+package mvc;
 
 public class InvalidName extends RuntimeException  {
     public InvalidName(String errorMessage) {

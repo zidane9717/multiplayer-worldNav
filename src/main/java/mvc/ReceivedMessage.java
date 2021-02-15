@@ -1,6 +1,6 @@
-package messagingstompwebsocket;
+package mvc;
 
-public class HelloMessage {
+public class ReceivedMessage {
 
     private String name;
     private String content;
@@ -15,15 +15,13 @@ public class HelloMessage {
 
     private String number;
 
-
-    public HelloMessage() {
+    public ReceivedMessage() {
     }
 
-    public HelloMessage(String name, String content, String number) {
+    public ReceivedMessage(String name, String content, String number) {
         this.name = name;
         this.content = content;
     }
-
 
     public String getContent() {
         return content;

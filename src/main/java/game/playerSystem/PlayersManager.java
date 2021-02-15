@@ -1,21 +1,19 @@
 package game.playerSystem;
 
-import game.entites.Seller;
 import game.items.Item;
 import game.rooms.Room;
-import game.settings.GameManager;
+import mvc.controller.GameManager;
 import game.settings.Map;
-import messagingstompwebsocket.GreetingController;
+import mvc.controller.GameController;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PlayersManager {
 
-     public HashMap<String, Player> players = new HashMap<>();
+    public HashMap<String, Player> players = new HashMap<>();
     private final ArrayList<String> bookedRooms = new ArrayList();
     HashMap<Integer, FightMode> liveFightModes = new HashMap<>();
     Map map;
@@ -113,7 +111,6 @@ public class PlayersManager {
         return "Invalid command";
     }
 
-
     void checkAnotherPlayer(Player player, String yx) throws Exception {
         if (map.playersLocations.get(yx).size() > 1) {
             map.roomAvailability(yx, 1);
@@ -135,34 +132,38 @@ public class PlayersManager {
         Player player = players.get(name);
         int x = player.nav.getX();
         int y = player.nav.getY();
-        Room room = players.get(name).currentRoom(y,x);
+        Room room = players.get(name).currentRoom(y, x);
         ArrayList<Item> items = new ArrayList<>(player.inventory.values());
-        if(items.size()>0)
-        {
+        if (items.size() > 0) {
             room.setLootOnFloor(items);
         }
         goldDistribution(player);
         terminate(player);
     }
 
-    void goldDistribution(Player playerLosser){
+    void goldDistribution(Player playerLosser) {
         GameManager manager = GameManager.getInstance();
-        GreetingController controller = GreetingController.getInstance();
+        GameController controller = GameController.getInstance();
         PlayersManager managerPlayers = manager.getGame(number).getPlayersManager();
-        double gold = playerLosser.gold.doubleValue() / (managerPlayers.players.size() - 1);
-        for (Player player : managerPlayers.players.values()) {
-            player.gold = BigDecimal.valueOf(player.gold.doubleValue() + gold);
-        }
-        try {
-            controller.sendToClients(number, "ANOUNCEMENT: EVERYONE GAINED " + gold + " GOLD");
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        if (managerPlayers.players.size() <= 1) {
+            //Finish Game
+        } else {
+            double gold = playerLosser.gold.doubleValue() / (managerPlayers.players.size() - 1);
+            for (Player player : managerPlayers.players.values()) {
+                player.gold = BigDecimal.valueOf(player.gold.doubleValue() + gold);
+            }
+            try {
+                controller.sendToClients(number, "ANOUNCEMENT: EVERYONE GAINED " + gold + " GOLD");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     void terminate(Player playerLoser) {
         GameManager manager = GameManager.getInstance();
-        manager.getGame(number).getPlayersManager().players.remove(playerLoser.getName(),playerLoser);
+        manager.getGame(number).getPlayersManager().players.remove(playerLoser.getName(), playerLoser);
         manager.getGame(number).getMap().playersLocations.get(String.valueOf(playerLoser.nav.getY()) + String.valueOf(playerLoser.nav.getX())).remove(playerLoser);
         manager.getGame(number).getMap().roomAvailability(String.valueOf(playerLoser.nav.getY()) + String.valueOf(playerLoser.nav.getX()), 0);
     }

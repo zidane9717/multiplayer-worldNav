@@ -11,12 +11,14 @@ public class Game {
     private boolean joinable;
     private boolean gameStatus;
     private PlayersManager manager;
+    String number;
 
-    public Game(String number){
-        gameStatus=false;
-        joinable=true;
+    public Game(String number) {
+        this.number = number;
+        gameStatus = false;
+        joinable = true;
         map = new Map(number);
-        manager = new PlayersManager(map,number);
+        manager = new PlayersManager(map, number);
     }
 
     public PlayersManager getPlayersManager() {
@@ -27,7 +29,7 @@ public class Game {
         return gameStatus;
     }
 
-    public void setGameStatus() {
+    private void setGameStatus() {
         gameStatus = true;
     }
 
@@ -35,21 +37,27 @@ public class Game {
         return joinable;
     }
 
-    public void disableJoinable() {
+    private void disableJoinable() {
         joinable = false;
     }
 
-    public void startTimer(String number) {
+    private void startTimer(String number) {
         time = new Time(number);
         timer = new Thread(time);
         timer.start();
     }
 
     public String getTime() {
-       return time.time();
+        return time.time();
     }
 
     public Map getMap() {
         return this.map;
+    }
+
+    public void start() {
+        disableJoinable();
+        setGameStatus();
+        startTimer(number);
     }
 }

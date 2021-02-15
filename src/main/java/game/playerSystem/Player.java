@@ -7,7 +7,7 @@ import game.entites.Seller;
 import game.items.FlashLight;
 import game.items.Item;
 import game.rooms.Room;
-import game.settings.GameManager;
+import mvc.controller.GameManager;
 import game.settings.Map;
 import game.settings.TextInterface;
 import game.settings.Gold;
@@ -15,7 +15,6 @@ import game.settings.Gold;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Player {
 
@@ -40,11 +39,11 @@ public class Player {
     }
 
     public String look() { //Writing to interface Entity
-        return currentRoom(nav.getY(), nav.getX()).wallAt(nav.getLooking()).look();
+        return currentRoom().wallAt(nav.getLooking()).look();
     }
 
     public String check() {
-        Entity entity = currentRoom(nav.getY(), nav.getX()).wallAt(nav.getLooking());
+        Entity entity = currentRoom().wallAt(nav.getLooking());
         if (entity instanceof CheckableEntity) {
             return ((CheckableEntity) entity).check(this);
         }
@@ -59,8 +58,7 @@ public class Player {
     }
 
     public String open() {
-
-        if (currentRoom(nav.getY(), nav.getX()).wallAt(nav.getLooking()) instanceof Door) {
+        if (currentRoom().wallAt(nav.getLooking()) instanceof Door) {
             Door door = (Door) currentRoom(nav.getY(), nav.getX()).wallAt(nav.getLooking());
             if (door.getState() == 1) {
                 return "door is open";
@@ -72,11 +70,11 @@ public class Player {
     }
 
     public String switchLights() {
-        if (currentRoom(nav.getY(), nav.getX()).getIllumination() == 1) {
-            currentRoom(nav.getY(), nav.getX()).setIllumination(0);
+        if (currentRoom().getIllumination() == 1) {
+            currentRoom().setIllumination(0);
             return "Lights off";
-        } else if (currentRoom(nav.getY(), nav.getX()).getIllumination() == 0) {
-            currentRoom(nav.getY(), nav.getX()).setIllumination(1);
+        } else if (currentRoom().getIllumination() == 0) {
+            currentRoom().setIllumination(1);
             return "Lights on";
         } else {
             return "Switch lights are jammed..";
@@ -91,7 +89,6 @@ public class Player {
                 "Keys & items: " + inventory.keySet().toString() + "\n" +
                 "===============";
     }
-
 
     String validatePayment(String item) {
         if (currentRoom(nav.getY(), nav.getX()).wallAt(nav.getLooking()) instanceof Seller) {
@@ -112,7 +109,6 @@ public class Player {
 
     String validateSelling(String item) {
         if (currentRoom(nav.getY(), nav.getX()).wallAt(nav.getLooking()) instanceof Seller) {
-
             Seller seller = (Seller) currentRoom(nav.getY(), nav.getX()).wallAt(nav.getLooking());
             if (inventory.containsKey(item)) {
                 return seller.sell(inventory.get(item), this);
@@ -124,7 +120,6 @@ public class Player {
     }
 
     public String tradeMode() {
-
         if (currentRoom(nav.getY(), nav.getX()).wallAt(nav.getLooking()) instanceof Seller) {
             TextInterface.tradeModeMessage();
             return "you can : 'buy<Item>', 'sell<Item>', 'list' to see the sellers items";
@@ -135,7 +130,7 @@ public class Player {
     public boolean checkRoomLightning() {
 
         //if lights switch in the room are off or jammed -> check if flashlight is owned and on
-        if (this.currentRoom(nav.getY(), nav.getX()).getIllumination() == 0 || this.currentRoom(nav.getY(), nav.getX()).getIllumination() == 3) {
+        if (this.currentRoom().getIllumination() == 0 || this.currentRoom().getIllumination() == 3) {
             if (this.inventory.containsKey("flashlight")) {
                 FlashLight f = (FlashLight) this.inventory.get("flashlight");
                 if (f.getState() == 0) {
@@ -152,9 +147,14 @@ public class Player {
 
     public Room currentRoom(int y, int x) {
         GameManager managerGames = GameManager.getInstance();
-
         Map map = managerGames.getGame(number).getMap();
         return map.roomAt(y, x);
+    }
+
+    public Room currentRoom() {
+        GameManager managerGames = GameManager.getInstance();
+        Map map = managerGames.getGame(number).getMap();
+        return map.roomAt(nav.getY(), nav.getX());
     }
 
     public String list() {

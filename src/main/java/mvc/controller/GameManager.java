@@ -1,14 +1,13 @@
-package game.settings;
+package mvc.controller;
 
 import game.playerSystem.Player;
-import messagingstompwebsocket.Greeting;
-import messagingstompwebsocket.GreetingController;
+import game.settings.Game;
 
 import java.util.HashMap;
 
 public class GameManager {
 
-    public static HashMap<String,Game> games = new HashMap<>();
+    private static final HashMap<String, Game> games = new HashMap<>();
 
     private static GameManager instance;
 
@@ -29,10 +28,6 @@ public class GameManager {
         return games.get(number);
     }
 
-    public  void addGame(String number, Game game){
-        games.put(number,game);
-    }
-
     public  void removeGame(String number){
         games.remove(number);
     }
@@ -42,9 +37,9 @@ public class GameManager {
     }
 
     public void wonTheGame(Player player,String number){
-        GreetingController greetingController = GreetingController.getInstance();
+        GameController gameController = GameController.getInstance();
         try {
-            greetingController.sendToClients(number,"CONGRATULATIONS to "+player.getName()+" HAS WON THE GAME");
+            gameController.sendToClients(number,"CONGRATULATIONS to "+player.getName()+" HAS WON THE GAME");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,13 +1,13 @@
-package messagingstompwebsocket;
+package mvc;
 
-public class Greeting {
+public class SendMessage {
 
 	private String content;
 
-	public Greeting() {
+	public SendMessage() {
 	}
 
-	public Greeting(String content) {
+	public SendMessage(String content) {
 		this.content = content;
 	}
 

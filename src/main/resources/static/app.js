@@ -45,6 +45,21 @@ function sendCommandButtons(type) {
     $("#send").prop("disabled", type);
 }
 
+function buttonsDisable() {
+
+    $("#name").prop("disabled", true);
+    $("#number").prop("disabled", true);
+
+    $("#hostBtn").prop("disabled", true);
+    $("#joinBtn").prop("disabled", true);
+
+    $("#commandInput").prop("disabled", false);
+    $("#send").prop("disabled", false);
+
+    $("#conversation").show();
+    $("#greetings").html("");
+}
+
 function fightModeInput(input) {
 
     var urlType = '/fight';
@@ -73,8 +88,11 @@ function fightModeInput(input) {
 }
 
 function validate(type) {
-
-    var urlType = '/validate';
+    if (type === 1) {
+        var urlType = '/validateHosting';
+    } else if (type === 2) {
+        var urlType = '/validateJoinning';
+    }
 
     $.ajax({
         type: 'GET',
@@ -82,35 +100,30 @@ function validate(type) {
         data: {
             number: $("#number").val(),
             name: $("#name").val(),
-            state: type
         },
         success: function (text) {
             if (type === 1) {
                 $("#start").prop("disabled", false);
-                $("#validateAtIndex").text("");
-                buttonsDisable();
-                connect();
-            } else if (type === 2) {
-                $("#validateAtIndex").text("");
-                buttonsDisable();
-                connect();
             }
-            showGreeting(text);
+
+            $("#validateAtIndex").text("");
+            buttonsDisable();
+            connect();
+            serverMessage(text);
+
         },
         error: function (jqXHR) {
-            if (type < 1) {
-                $("#validateAtIndex").text("The number/name is already used.");
-            } else {
-                $("#validateAtIndex").text("Game already started/Game not available..");
+            if (type === 1) {
+                $("#validateAtIndex").text("Game number already exist");
+            } else if (type === 2) {
+                $("#validateAtIndex").text("Make sure the Game exist, Join able and valid name");
             }
         }
     });
 }
 
 function disconnectPlayer() {
-
     var urlType = '/disconnect';
-
     $.ajax({
         type: 'GET',
         url: urlType,
@@ -136,34 +149,25 @@ function connect() {
         console.log('Connected: ' + frame);
 
         stompClient.subscribe('/topic/greetings/' + $("#number").val() + "/" + $("#name").val(), function (greeting) {
-            showGreeting(JSON.parse(greeting.body).content);
+            serverMessage(JSON.parse(greeting.body).content);
         });
         stompClient.subscribe('/topic/greetings/' + $("#number").val(), function (greeting) {
-            showGreeting(JSON.parse(greeting.body).content);
+            serverMessage(JSON.parse(greeting.body).content);
         });
     });
 }
 
-function fightmode(id) {
-    $("#rock").prop("disabled", false);
-    $("#paper").prop("disabled", false);
-    $("#scissors").prop("disabled", false);
-    $("#send").prop("disabled", true);
-    $("#commandInput").prop("disabled", true);
-    $("#fight").val(id);
-}
-
-function showGreeting(message) {
+function serverMessage(message) {
 
     var n = message.split(" ");
+
     if (n[0] === "FIGHTMODE") {
         fightOutcomes(message);
     } else if (n[0] === "player" || n[0] === "!!!") {
         showPlayer(message);
-    } else if(n[2] === "STARTED"){
+    } else if (n[2] === "STARTED") {
         $("#disconnect").prop("disabled", false);
-    }
-    else {
+    } else {
         $("#greetings").append("<tr><td>" + message + "</td></tr>");
     }
 }
@@ -172,10 +176,10 @@ function fightOutcomes(message) {
     var n = message.split(" ");
     sendCommandButtons(true);
 
-    if (n[1] === "ANNOUNCEMENT") {
-        fightmode(n[n.length - 1])
-    } else if (n[n.length - 2] === "DRAW") {
-        fightmode(n[n.length - 1])
+    if (n[1] === "ANNOUNCEMENT" || n[n.length - 2] === "DRAW") {
+        fightButtons(false);
+        sendCommandButtons(true);
+        $("#fight").val(n[n.length - 1]);
     } else if (n[n.length - 2] !== $("#name").val()) {
         stompClient.disconnect();
     } else if (n[n.length - 2] === $("#name").val()) {
@@ -191,7 +195,18 @@ function showPlayer(message) {
 function startGame() {
     $("#start").prop("disabled", true);
     $("#disconnect").prop("disabled", false);
-    validate(3);
+    var urlType = '/startGame';
+    $.ajax({
+        type: 'GET',
+        url: urlType,
+        data: {
+            number: $("#number").val(),
+        },
+        success: function (text) {
+        },
+        error: function (jqXHR) {
+        }
+    });
 }
 
 function sendCommand(text) {
@@ -201,21 +216,6 @@ function sendCommand(text) {
         'content': text
     }));
     $("#commandInput").val("");
-}
-
-function buttonsDisable() {
-
-    $("#name").prop("disabled", true);
-    $("#number").prop("disabled", true);
-
-    $("#hostBtn").prop("disabled", true);
-    $("#joinBtn").prop("disabled", true);
-
-    $("#commandInput").prop("disabled", false);
-    $("#send").prop("disabled", false);
-
-    $("#conversation").show();
-    $("#greetings").html("");
 }
 
 function myFunction() {

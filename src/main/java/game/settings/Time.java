@@ -1,7 +1,7 @@
 package game.settings;
 
 
-import messagingstompwebsocket.GreetingController;
+import mvc.controller.GameController;
 
 public class Time implements Runnable {
 
@@ -10,14 +10,14 @@ public class Time implements Runnable {
 
     public Time(String number) {
         this.number = number;
-        time = 1500000;
+        time = 15000000;
     }
 
     @Override
     public void run() {
         try {
             while (time != 0) {
-                GreetingController.getInstance().sendToClients(number, time());
+                GameController.getInstance().sendToClients(number, time());
                 time = time - 60000;
                 Thread.sleep(60000);
             }
