@@ -6,7 +6,7 @@ import game.rooms.Room;
 import mvc.controller.GameManager;
 import game.settings.Map;
 
-public class PlayerNavigation {
+public class Navigation {
 
     private Player player;
     private int x;
@@ -14,17 +14,13 @@ public class PlayerNavigation {
     private String looking = "east";
     private String number;
 
-    PlayerNavigation(Player player, String number) {
+    Navigation(Player player, String number) {
         this.number = number;
         this.player = player;
     }
 
     public int getX() {
         return x;
-    }
-
-    public String getLooking() {
-        return looking;
     }
 
     public void setX(int x) {
@@ -37,6 +33,10 @@ public class PlayerNavigation {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public String getLooking() {
+        return looking;
     }
 
     String move(String direction) throws Exception {
@@ -143,4 +143,5 @@ public class PlayerNavigation {
         }
         return null;
     }
+
 }

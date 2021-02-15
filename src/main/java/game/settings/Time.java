@@ -2,6 +2,7 @@ package game.settings;
 
 
 import mvc.controller.GameController;
+import mvc.controller.GameManager;
 
 public class Time implements Runnable {
 
@@ -10,7 +11,7 @@ public class Time implements Runnable {
 
     public Time(String number) {
         this.number = number;
-        time = 15000000;
+        time = 3000000;
     }
 
     @Override
@@ -21,8 +22,8 @@ public class Time implements Runnable {
                 time = time - 60000;
                 Thread.sleep(60000);
             }
-            System.out.println("================ **TIME IS UP!!** ================");
-            //   Game.outcome(2);
+            GameController.getInstance().sendToClients(number,"TIME IS UP EVERYONE LOST");
+            GameManager.getInstance().removeGame(number);
         } catch (InterruptedException ignored) {
         } catch (Exception e) {
             e.printStackTrace();

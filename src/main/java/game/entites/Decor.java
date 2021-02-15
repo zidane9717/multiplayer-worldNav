@@ -34,7 +34,7 @@ public class Decor implements Entity, CheckableEntity {
     @Override
     public String check(Player player) {
         if (item != null) {
-            player.inventory.put(item.getName(), item);
+            player.inventory.addItem(item);
             String print="";
             if (item instanceof Key) {
                  print = "The '" + item.getName() + "' key was acquired";

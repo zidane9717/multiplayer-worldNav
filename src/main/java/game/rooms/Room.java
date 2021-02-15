@@ -110,7 +110,7 @@ public class Room implements RoomPlan{
     public String getLootOnFloor(Player player) {
         String answer = " items looted from the floor : ";
             for(Item item : lootOnFloor){
-                player.inventory.put(item.getName(),item);
+                player.inventory.addItem(item);
                 answer=answer+" "+item.getName();
             }
             lootOnFloor=null;

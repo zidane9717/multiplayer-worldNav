@@ -14,8 +14,8 @@ public class GameManager {
     private GameManager(){}
 
     public static GameManager getInstance(){
-        if(instance == null){
-           return instance = new GameManager();
+        if(instance == null) {
+            return instance = new GameManager();
         }
         return instance;
     }

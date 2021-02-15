@@ -27,7 +27,7 @@ public class Seller implements Entity {
     public String confirmPayment(String item,Player player) {
         Gold itemPrice = sellerItems.get(item).getPrice();
 
-        player.inventory.put(item, sellerItems.get(item));
+        player.inventory.addItem(sellerItems.get(item));
         player.gold = player.gold.subtract(itemPrice.getValue());
         return "purchased " + item;
     }
@@ -35,7 +35,7 @@ public class Seller implements Entity {
     public String sell(Item item,Player player) {
         BigDecimal itemPrice = item.getPrice().getValue();
 
-        player.inventory.remove(item.getName());
+        player.inventory.removeItem(item.getName());
         player.gold = player.gold.add(itemPrice, new MathContext(4));
         return "<" + item.getName() + " sold>";
     }

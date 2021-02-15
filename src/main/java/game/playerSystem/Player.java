@@ -5,7 +5,6 @@ import game.entites.Door;
 import game.entites.Entity;
 import game.entites.Seller;
 import game.items.FlashLight;
-import game.items.Item;
 import game.rooms.Room;
 import mvc.controller.GameManager;
 import game.settings.Map;
@@ -14,20 +13,21 @@ import game.settings.Gold;
 
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 
 public class Player {
 
     private String name;
-    public HashMap<String, Item> inventory = new HashMap<>();
     public BigDecimal gold = Gold.TWENTY.getValue();
-    public PlayerNavigation nav;
+    public Navigation nav;
     private String number;
 
+    public Inventory inventory;
+
     public Player(String name, String number) {
+        inventory = new Inventory();
         this.number = number;
         this.name = name;
-        nav = new PlayerNavigation(this, number);
+        nav = new Navigation(this, number);
     }
 
     public String getName() {
@@ -51,8 +51,8 @@ public class Player {
     }
 
     public String use(String item) {
-        if (inventory.containsKey(item)) {
-            return inventory.get(item).use(this);
+        if (inventory.checkItem(item)) {
+            return inventory.getItem(item).use(this);
         }
         return "i don't have such an item..";
     }
@@ -86,7 +86,7 @@ public class Player {
         return " Looking : " + nav.getLooking() + "\n" +
                 "      Gold : " + gold + "\n" +
                 "      Current room : " + currentRoomName + "\n" +
-                "Keys & items: " + inventory.keySet().toString() + "\n" +
+                "Keys & items: " + inventory.showItems()+ "\n" +
                 "===============";
     }
 
@@ -110,8 +110,8 @@ public class Player {
     String validateSelling(String item) {
         if (currentRoom(nav.getY(), nav.getX()).wallAt(nav.getLooking()) instanceof Seller) {
             Seller seller = (Seller) currentRoom(nav.getY(), nav.getX()).wallAt(nav.getLooking());
-            if (inventory.containsKey(item)) {
-                return seller.sell(inventory.get(item), this);
+            if (inventory.checkItem(item)) {
+                return seller.sell(inventory.getItem(item), this);
             } else {
                 return "i don't have such item to sell..";
             }
@@ -131,8 +131,8 @@ public class Player {
 
         //if lights switch in the room are off or jammed -> check if flashlight is owned and on
         if (this.currentRoom().getIllumination() == 0 || this.currentRoom().getIllumination() == 3) {
-            if (this.inventory.containsKey("flashlight")) {
-                FlashLight f = (FlashLight) this.inventory.get("flashlight");
+            if (inventory.checkItem("flashlight")) {
+                FlashLight f = (FlashLight) inventory.getItem("flashlight");
                 if (f.getState() == 0) {
                     System.out.println("i can't do anything, it's too dark..maybe i should use my flashlight");
                     return false;

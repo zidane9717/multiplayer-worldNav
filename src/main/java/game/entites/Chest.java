@@ -41,12 +41,11 @@ public class Chest implements Entity,CheckableEntity {
        String answer="Items are looted: ";
         for (Object chestLoot : items) {
             if (chestLoot instanceof Gold) {
-
                 BigDecimal chestLootVal = ((Gold) chestLoot).getValue();
                 player.gold = player.gold.add(chestLootVal, new MathContext(4));
                 answer=answer+" [" + ((Gold) chestLoot).getValue() + " gold] ";
             } else if (chestLoot instanceof Item) {
-                player.inventory.put(((Item) chestLoot).getName(), (Item) chestLoot);
+                player.inventory.addItem((Item) chestLoot);
                 if(chestLoot instanceof Key){
                     answer=answer+" [The " + ((Item) chestLoot).getName() + " key] ";
                 }else{

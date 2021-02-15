@@ -22,7 +22,6 @@ public class RoomEngineer {
     }
 
     public void makeCustomRoom(String name, int lights, Entity north, Entity south, Entity east, Entity west) {
-
         roomBuilder = new OldRoomBuilder();
         this.roomBuilder.buildName(name);
         this.roomBuilder.buildLights(lights);
@@ -30,7 +29,6 @@ public class RoomEngineer {
         this.roomBuilder.buildSouthWall(south);
         this.roomBuilder.buildEastWall(east);
         this.roomBuilder.buildWestWall(west);
-
     }
 
     public void makeDecorRoom(int type) {

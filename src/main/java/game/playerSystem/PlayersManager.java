@@ -133,7 +133,7 @@ public class PlayersManager {
         int x = player.nav.getX();
         int y = player.nav.getY();
         Room room = players.get(name).currentRoom(y, x);
-        ArrayList<Item> items = new ArrayList<>(player.inventory.values());
+        ArrayList<Item> items = new ArrayList<>(player.inventory.dropItems());
         if (items.size() > 0) {
             room.setLootOnFloor(items);
         }

@@ -49,8 +49,8 @@ public class FightMode {
     }
 
     private void loot(Player playerWinner, Player playerLosser) {
-        for (Item item : playerLosser.inventory.values()) {
-            playerWinner.inventory.put(item.getName(), item);
+        for (Item item : playerLosser.inventory.dropItems()) {
+            playerWinner.inventory.addItem(item);
         }
     }
 
