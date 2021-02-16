@@ -42,8 +42,8 @@ public class PlayersManager {
             }
 
             if (!bookedRooms.contains(String.valueOf(y + x))) {
-                player.nav.setX(5);
-                player.nav.setY(5);
+                player.nav.setX(x);
+                player.nav.setY(y);
                 bookedRooms.add(String.valueOf(y) + x);
                 break;
             }
