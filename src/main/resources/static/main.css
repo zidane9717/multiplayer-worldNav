@@ -77,8 +77,9 @@ button, input, select, textarea {
 
 }
 
-.btnHostJoin{
+.btnHostJoin {
     width: fit-content;
+    text-align: center;
     margin: 10px auto 0;
 }
 
@@ -92,3 +93,5 @@ button, input, select, textarea {
     border-radius: 19px;
     margin: 8px;
 }
+
+
