@@ -12,9 +12,6 @@ pipeline {
             steps {
                             echo'Testing'
             }
-     
-            post {
-            }
         }
     }
 }
