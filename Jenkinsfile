@@ -8,11 +8,12 @@ pipeline {
                 sh "mvn clean install"
             }
         }
+    }
         post{
             always{
                 //for fresh workspace
             cleanWs()
             }
-        }
+        
                      }
         }
